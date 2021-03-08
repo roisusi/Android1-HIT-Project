@@ -47,4 +47,17 @@
         app:layout_constraintStart_toStartOf="@+id/passText"
         app:layout_constraintTop_toBottomOf="@+id/passText" />
 
+    <Button
+        android:id="@+id/backFrag"
+        android:layout_width="186dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/buttonshape"
+        android:onClick="backToMain"
+        android:text="Back"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/loginFrag"
+        app:layout_constraintStart_toStartOf="@+id/loginFrag"
+        app:layout_constraintTop_toBottomOf="@+id/passText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
