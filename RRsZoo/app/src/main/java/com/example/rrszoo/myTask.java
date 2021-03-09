@@ -42,13 +42,10 @@ class myTask extends AsyncTask<String,Void,String>
 
             printWriter.write(login.get(1)); // send the message through the socket
             Log.d(TAG, "doInBackground: " + login.get(1));
-
-
+            
 
             printWriter.flush();
             printWriter.close();
-
-
 
             s.close();
 

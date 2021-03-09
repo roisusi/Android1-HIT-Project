@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -70,16 +71,16 @@ public class MainActivity extends AppCompatActivity {
 
 /*        Intent intent = new Intent(MainActivity.this, AnimalPage.class);
         startActivity(intent);*/
-        Intent intent = new Intent(MainActivity.this, MainPage.class);
-        startActivity(intent);
+        /*Intent intent = new Intent(MainActivity.this, MainPage.class);
+        startActivity(intent);*/
 
-//        EditText login = (EditText) findViewById(R.id.loginText);
-//        message.add(login.getText().toString());
-//        EditText pass = (EditText) findViewById(R.id.passText);
-//        message.add(pass.getText().toString());
-//
-//        mt = new myTask(message);
-//        mt.execute();
+        EditText login = (EditText) findViewById(R.id.loginText);
+        message.add(login.getText().toString());
+        EditText pass = (EditText) findViewById(R.id.passText);
+        message.add(pass.getText().toString());
+
+        mt = new myTask(message);
+        mt.execute();
 
     }
 
