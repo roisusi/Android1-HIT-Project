@@ -67,13 +67,13 @@ public class MainActivity extends AppCompatActivity {
             title.setVisibility(View.VISIBLE);
         }
     }
-    public void ConnectToDataBase(View view){
+    public void loginToServer(View view){
 
 /*        Intent intent = new Intent(MainActivity.this, AnimalPage.class);
         startActivity(intent);*/
         /*Intent intent = new Intent(MainActivity.this, MainPage.class);
         startActivity(intent);*/
-
+        message.add("Login");
         EditText login = (EditText) findViewById(R.id.loginText);
         message.add(login.getText().toString());
         EditText pass = (EditText) findViewById(R.id.passText);

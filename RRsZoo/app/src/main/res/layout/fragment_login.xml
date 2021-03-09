@@ -41,7 +41,7 @@
         android:layout_height="57dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/buttonshape"
-        android:onClick="ConnectToDataBase"
+        android:onClick="loginToServer"
         android:text="Login"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="@+id/passText"
