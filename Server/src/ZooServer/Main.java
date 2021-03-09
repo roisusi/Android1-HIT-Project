@@ -1,63 +1,66 @@
 package ZooServer;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     private static ServerSocket ss;
-    private static Socket s;
+    private static Socket socket;
     private static BufferedReader br;
     private static InputStreamReader isr;
-    private static String message;
+    private static String message = "";
+    private static PrintWriter output;
+    private static List<String> mgs;
     private static DataBase db;
+    private static Login login;
 
-    public static void main(String[] args) {
-        boolean flag = false;
+    public static void main(String[] args) throws IOException {
+        db = new DataBase();
+        mgs = new ArrayList<>();
         try {
             while (true) {
-
+                Gson gson = new Gson();
                 ss = new ServerSocket(20000);
-                s = ss.accept();
-                isr = new InputStreamReader(s.getInputStream()); //to receive the data
+                socket = ss.accept();
+                output = new PrintWriter(socket.getOutputStream(),true);
+                isr = new InputStreamReader(socket.getInputStream()); //to receive the data
                 br = new BufferedReader(isr);
-                message = br.readLine();
-                System.out.println(message);
 
-                //Connection to DataBase
-                if (message.equals("connect")){
-                    db = new DataBase();
-                    try {
-                        db.connect();
-                        flag = true;
-                        System.out.println("Connection Establish Welcome to DataBase Test");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                message = br.readLine();
+                mgs = gson.fromJson(message, ArrayList.class);
+                System.out.println(mgs);
+
+                switch (mgs.get(0)) {
+                    case "Login":
+                        try {
+                            db.connect();
+                            login = db.getUserName(mgs.get(1),mgs.get(2));
+                            System.out.println("User is : " + login.getLogin() + " and Password is : " + login.getPas());
+                            output.println("Login ok");
+                        } catch (SQLException throwable) {
+                            throwable.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                 }
-                if (flag == true && message.equals("exit")){
-                    db.disconnect();
-                    System.out.println("Connection to DB has closed");
-                    flag = false;
-                }
-                if (message.equals("login")){
-                    try {
-                        String name = db.getUserName(0);
-                        System.out.println(name);
-                    } catch (SQLException throwable) {
-                        throwable.printStackTrace();
-                    }
-                }
+
+
                 isr.close();
                 br.close();
+                output.close();
                 ss.close();
-                s.close();
+                socket.close();
 
             }
-
 
 
         } catch (IOException e) {
