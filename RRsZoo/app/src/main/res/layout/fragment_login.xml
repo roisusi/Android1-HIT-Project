@@ -41,11 +41,13 @@
         android:layout_height="57dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/buttonshape"
+        android:onClick="ConnectToDataBase"
         android:text="Login"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="@+id/passText"
         app:layout_constraintStart_toStartOf="@+id/passText"
-        app:layout_constraintTop_toBottomOf="@+id/passText" />
+        app:layout_constraintTop_toBottomOf="@+id/passText"
+        tools:ignore="OnClick" />
 
     <Button
         android:id="@+id/backFrag"
@@ -58,6 +60,7 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="@+id/loginFrag"
         app:layout_constraintStart_toStartOf="@+id/loginFrag"
-        app:layout_constraintTop_toBottomOf="@+id/passText" />
+        app:layout_constraintTop_toBottomOf="@+id/passText"
+        tools:ignore="OnClick" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
