@@ -24,25 +24,14 @@
         android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/buttonshape"
         android:inputType="textCapSentences"
         android:onClick="loginFrag"
         android:text="Login"
-        app:layout_constraintBottom_toTopOf="@+id/guest"
+        app:layout_constraintBottom_toTopOf="@+id/register"
         app:layout_constraintEnd_toEndOf="@+id/titleBar"
         app:layout_constraintStart_toStartOf="@+id/titleBar" />
-
-    <Button
-        android:id="@+id/guest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/buttonshape"
-        android:inputType="textCapSentences"
-        android:text="Guest"
-        app:layout_constraintBottom_toTopOf="@+id/register"
-        app:layout_constraintStart_toStartOf="@+id/login" />
 
     <Button
         android:id="@+id/register"
@@ -51,12 +40,24 @@
         android:layout_marginBottom="100dp"
         android:background="@drawable/buttonshape"
         android:inputType="textCapSentences"
+        android:onClick="registerUser"
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guest" />
+        app:layout_constraintStart_toStartOf="@+id/login" />
 
     <FrameLayout
-        android:id="@+id/fragment"
+        android:id="@+id/fragmentLog"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentReg"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

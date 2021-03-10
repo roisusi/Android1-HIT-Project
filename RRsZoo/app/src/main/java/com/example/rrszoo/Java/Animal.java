@@ -1,4 +1,4 @@
-package com.example.rrszoo;
+package com.example.rrszoo.Java;
 
 import android.media.Image;
 

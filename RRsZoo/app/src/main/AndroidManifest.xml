@@ -19,14 +19,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RRsZoo"
         android:windowSoftInputMode="adjustResize">
-        <activity android:name=".MainPage"></activity>
+        <activity android:name=".Java.MainPage"></activity>
         <activity
-            android:name=".AnimalPage"
+            android:name=".Java.AnimalPage"
             android:label="@string/title_activity_main_page"
             android:theme="@style/Theme.RRsZoo.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Java.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

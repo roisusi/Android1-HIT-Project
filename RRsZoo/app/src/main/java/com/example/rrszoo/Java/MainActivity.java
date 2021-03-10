@@ -1,4 +1,4 @@
-package com.example.rrszoo;
+package com.example.rrszoo.Java;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -9,9 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.rrszoo.Fragments.FragmentLogin;
+import com.example.rrszoo.Fragments.FragmentRegister;
+import com.example.rrszoo.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction fragmentTransaction;
     private Button login;
     private Button register;
-    private Button guest;
     private ImageView title;
     private List<String> message;
     myTask mt;
@@ -35,21 +37,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         login = (Button) findViewById(R.id.login);
         register = (Button) findViewById(R.id.register);
-        guest = (Button) findViewById(R.id.guest);
         title = (ImageView) findViewById(R.id.titleBar);
         message = new ArrayList<>();
+    }
+
+    public void registerUser(View view){
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragmentReg, new FragmentRegister()).addToBackStack(null).commit();
+
+        login.setVisibility(View.INVISIBLE);
+        register.setVisibility(View.INVISIBLE);
+        title.setVisibility(View.INVISIBLE);
     }
 
 
     public void loginFrag(View view) {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment, new FragmentLogin()).addToBackStack(null).commit();
-
+        fragmentTransaction.add(R.id.fragmentLog, new FragmentLogin()).addToBackStack(null).commit();
 
         login.setVisibility(View.INVISIBLE);
         register.setVisibility(View.INVISIBLE);
-        guest.setVisibility(View.INVISIBLE);
         title.setVisibility(View.INVISIBLE);
 
     }
@@ -63,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager.popBackStack();
             login.setVisibility(View.VISIBLE);
             register.setVisibility(View.VISIBLE);
-            guest.setVisibility(View.VISIBLE);
             title.setVisibility(View.VISIBLE);
         }
     }
@@ -71,16 +79,16 @@ public class MainActivity extends AppCompatActivity {
 
 /*        Intent intent = new Intent(MainActivity.this, AnimalPage.class);
         startActivity(intent);*/
-        /*Intent intent = new Intent(MainActivity.this, MainPage.class);
-        startActivity(intent);*/
-        message.add("Login");
+        Intent intent = new Intent(MainActivity.this, MainPage.class);
+        startActivity(intent);
+/*        message.add("Login");
         EditText login = (EditText) findViewById(R.id.loginText);
         message.add(login.getText().toString());
         EditText pass = (EditText) findViewById(R.id.passText);
         message.add(pass.getText().toString());
 
         mt = new myTask(message);
-        mt.execute();
+        mt.execute();*/
 
     }
 
@@ -88,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
         mt = new myTask(message);
         mt.execute();
         Toast.makeText(getApplicationContext(),"Data sent",Toast.LENGTH_LONG);
+    }
+
+    public void register(View view){
+        //DataBase
     }
 
 
