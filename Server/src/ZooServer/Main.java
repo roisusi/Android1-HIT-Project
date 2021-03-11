@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    private static ServerSocket ss;
-    private static Socket socket;
-    private static BufferedReader br;
-    private static InputStreamReader isr;
     private static String message = "";
     private static PrintWriter output;
     private static List<String> mgs;
@@ -29,23 +25,24 @@ public class Main {
         try {
             while (true) {
                 Gson gson = new Gson();
-                ss = new ServerSocket(20000);
-                socket = ss.accept();
-                output = new PrintWriter(socket.getOutputStream(),true);
-                isr = new InputStreamReader(socket.getInputStream()); //to receive the data
-                br = new BufferedReader(isr);
+                ServerSocket ss = new ServerSocket(20000);
+                Socket socket = ss.accept();
+
+                InputStreamReader isr = new InputStreamReader(socket.getInputStream()); //to receive the data
+                BufferedReader br = new BufferedReader(isr);
 
                 message = br.readLine();
                 mgs = gson.fromJson(message, ArrayList.class);
-                System.out.println(mgs);
 
                 switch (mgs.get(0)) {
                     case "Login":
                         try {
                             db.connect();
                             login = db.getUserName(mgs.get(1),mgs.get(2));
+                            output = new PrintWriter(socket.getOutputStream(), true);
                             System.out.println("User is : " + login.getLogin() + " and Password is : " + login.getPas());
                             output.println("Login ok");
+                            output.flush();
                         } catch (SQLException throwable) {
                             throwable.printStackTrace();
                         } catch (Exception e) {
