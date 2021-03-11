@@ -19,6 +19,7 @@ public class Main {
     private static DataBase db;
     private static Login login;
     private static Animal animal;
+    private static ArrayList<String> listOfTime;
 
 
     public static void main(String[] args) throws IOException {
@@ -59,12 +60,25 @@ public class Main {
                             db.connect();
                             animal = db.animalPage(mgs.get(1));
                             output = new PrintWriter(socket.getOutputStream(), true);
-                            //System.out.println("Animal is : " + animal.send() );
+                            System.out.println("Animal is : " + animal.send() );
                             String serializedLogIn = gson.toJson(animal.send());
                             output.println(serializedLogIn);
                             output.flush();
                         } catch (SQLException throwable) {
                             throwable.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                            break;
+                    case "Type":
+                        try {
+                            db.connect();
+                            listOfTime = db.getTypesToSpinner(mgs.get(1));
+                            output = new PrintWriter(socket.getOutputStream(), true);
+                            System.out.println("Animal is : " + listOfTime );
+                            String serializedLogIn = gson.toJson(listOfTime);
+                            output.println(serializedLogIn);
+                            output.flush();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

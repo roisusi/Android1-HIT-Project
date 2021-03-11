@@ -2,6 +2,7 @@ package ZooServer;
 
 import java.awt.*;
 import java.sql.*;
+import java.util.ArrayList;
 
 
 public class DataBase {
@@ -75,6 +76,31 @@ public class DataBase {
         return new Animal(type,name,location,lifetime,food,numberOfChildrens,imageURI);
     }
 
+
+    public ArrayList<String> getTypesToSpinner(String Type) throws SQLException {
+
+        String selectSql = "select * from Animals where Type ="+ "\""  + Type + "\"";
+        Statement selectStatment = con.createStatement();
+        selectStatment.getResultSet();
+        ResultSet results = null;
+        try{
+            results = selectStatment.executeQuery(selectSql);
+        }
+        catch (SQLException e){
+            return null;
+
+        }
+
+        ArrayList animalTypes = new ArrayList();
+
+        while (results.next()) {
+            animalTypes.add(results.getString("Name"));
+        }
+        selectStatment.close();
+
+        return animalTypes;
+
+    }
 
     //                          //
     //  Connection To DataBase  //

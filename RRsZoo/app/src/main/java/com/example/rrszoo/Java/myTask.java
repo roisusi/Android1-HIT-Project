@@ -96,6 +96,14 @@ class myTask extends AsyncTask<String,Void,String>
             activity.SetAnimalFromDataBase(backFromServer);
         }
 
+        if (activity instanceof MainPage && backFromServer.isEmpty()) {
+            openLoginAlert();
+        }
+        else if (activity instanceof MainPage) {
+
+            MainPage activity = (MainPage) this.activity;
+            activity.fillArrayToSpinner(backFromServer);
+        }
 
         super.onPostExecute(s);
     }

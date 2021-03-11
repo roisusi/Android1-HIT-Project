@@ -4,14 +4,12 @@
     android:versionCode="1"
     android:versionName="1.0">
 
-    <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="17" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name = "android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name = "android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-feature android:name="android.hardware.camera" android:required="true"></uses-feature>
+
 
     <application
         android:allowBackup="true"
@@ -20,6 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RRsZoo"
+        android:requestLegacyExternalStorage="true"
+        android:preserveLegacyExternalStorage="true"
         android:windowSoftInputMode="adjustResize">
         <activity android:name=".Java.MainPage"></activity>
         <activity
