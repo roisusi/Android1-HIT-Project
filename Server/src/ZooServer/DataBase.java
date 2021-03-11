@@ -1,5 +1,6 @@
 package ZooServer;
 
+import java.awt.*;
 import java.sql.*;
 
 
@@ -7,7 +8,7 @@ public class DataBase {
 
     private Connection con;
 
-    public Login getUserName(String user , String pass) throws SQLException {
+    public Login loginPage(String user , String pass) throws SQLException {
         String selectSql = "select * from Users where Users ="+ "\""  + user + "\"" + "and Password=" + pass;
         Statement selectStatment = con.createStatement();
         selectStatment.getResultSet();
@@ -34,6 +35,44 @@ public class DataBase {
         selectStatment.close();
 
         return new Login(name,password,Admin,Email);
+    }
+
+    public Animal animalPage(String animal) throws SQLException {
+
+        String selectSql = "select * from Animals where Name ="+ "\""  + animal + "\"";
+        Statement selectStatment = con.createStatement();
+        selectStatment.getResultSet();
+        ResultSet results = null;
+        try{
+            results = selectStatment.executeQuery(selectSql);
+        }
+        catch (SQLException e){
+            return null;
+
+        }
+
+        String type="";
+        String name="";
+        String location="";
+        String lifetime="";
+        String food="";
+        String numberOfChildrens="";
+        String imageURI="";
+
+        while (results.next()) {
+            type = results.getString("Type");
+            name = results.getString("Name");
+            location = results.getString("Location");
+            lifetime = results.getString("LifeTime");
+            food = results.getString("Food");
+            numberOfChildrens = results.getString("NumOfChildrens");
+            imageURI = results.getString("ImageURI");
+
+        }
+        selectStatment.close();
+
+
+        return new Animal(type,name,location,lifetime,food,numberOfChildrens,imageURI);
     }
 
 

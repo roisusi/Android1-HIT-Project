@@ -18,6 +18,7 @@ public class Main {
     private static List<String> mgs;
     private static DataBase db;
     private static Login login;
+    private static Animal animal;
 
 
     public static void main(String[] args) throws IOException {
@@ -39,11 +40,27 @@ public class Main {
                     case "Login":
                         try {
                             db.connect();
-                            login = db.getUserName(mgs.get(1),mgs.get(2));
+                            login = db.loginPage(mgs.get(1),mgs.get(2));
                             output = new PrintWriter(socket.getOutputStream(), true);
                             System.out.println("User is : " + login.getLogin() + " and Password is : " + login.getPas()
                             + " and email is : " + login.getEmail());
                             String serializedLogIn = gson.toJson(login.send());
+                            output.println(serializedLogIn);
+                            output.flush();
+
+                        } catch (SQLException throwable) {
+                            throwable.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                            break;
+                        case "Animal":
+                        try {
+                            db.connect();
+                            animal = db.animalPage(mgs.get(1));
+                            output = new PrintWriter(socket.getOutputStream(), true);
+                            //System.out.println("Animal is : " + animal.send() );
+                            String serializedLogIn = gson.toJson(animal.send());
                             output.println(serializedLogIn);
                             output.flush();
                         } catch (SQLException throwable) {
@@ -51,6 +68,8 @@ public class Main {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                            break;
+
                 }
 
 

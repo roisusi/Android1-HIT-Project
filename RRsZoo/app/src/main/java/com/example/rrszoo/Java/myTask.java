@@ -31,13 +31,16 @@ class myTask extends AsyncTask<String,Void,String>
     private static List<String> login;
     private static Activity activity;
 
-    public myTask(List<String> message,String okMessages,Activity activity) {
+    public myTask(List<String> message,Activity activity) {
+
         this.backFromServer = new ArrayList<>();
+
         this.activity = activity;
-        this.okMessage = okMessages;
+
         login = new ArrayList<>();
         this.login = message;
     }
+
 
     @Override
     protected String doInBackground(String... strings) {
@@ -54,12 +57,11 @@ class myTask extends AsyncTask<String,Void,String>
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
             okMessage = bufferedReader.readLine();
-            if (okMessage != null)
-                backFromServer = gson.fromJson(okMessage,ArrayList.class);
+            if (okMessage != null) {
+                backFromServer = gson.fromJson(okMessage, ArrayList.class);
+            }
 
             Log.d(TAG, "myTask: is " + backFromServer);
-            strings[0] = okMessage;
-            Log.d(TAG, "myTask: is strings " + strings[0]);
 
             pr.flush();
             pr.close();
@@ -79,15 +81,28 @@ class myTask extends AsyncTask<String,Void,String>
             if (activity instanceof MainActivity && backFromServer.isEmpty()) {
                 openLoginAlert();
             }
-            else {
+            else if (activity instanceof MainActivity){
 
                 MainActivity activity = (MainActivity) this.activity;
                 activity.postLogin(backFromServer);
             }
 
+        if (activity instanceof AnimalPage && backFromServer.isEmpty()) {
+            openLoginAlert();
+        }
+        else if (activity instanceof AnimalPage) {
+
+            AnimalPage activity = (AnimalPage) this.activity;
+            activity.SetAnimalFromDataBase(backFromServer);
+        }
+
+
         super.onPostExecute(s);
     }
 
+    //-----------------//
+    //Alert  For Login //
+    //-----------------//
     public void openLoginAlert(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
         alertDialogBuilder.setMessage("You have Enter Wrong User/Password");

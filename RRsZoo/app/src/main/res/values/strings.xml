@@ -12,14 +12,6 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
-    <string-array name="numbers">
-        <item>One</item>
-        <item>Two</item>
-        <item>Three</item>
-        <item>Four</item>
-        <item>Five</item>
-    </string-array>
-
     <string-array name="SeaAnimals">
         <item>Hammer Fish</item>
         <item>Seahorse</item>
@@ -28,24 +20,24 @@
     </string-array>
 
     <string-array name="Arthropoda">
-        <item>Hammer Fish</item>
-        <item>Seahorse</item>
-        <item>Electric Eel</item>
-        <item>Salmon</item>
+        <item>Yellow Scorpion</item>
+        <item>Black Widow</item>
+        <item>Octopus</item>
+        <item>Garden Snail</item>
     </string-array>
 
     <string-array name="Birds">
-        <item>Hammer Fish</item>
-        <item>Seahorse</item>
-        <item>Electric Eel</item>
-        <item>Salmon</item>
+        <item>Hoopoe</item>
+        <item>Owl</item>
+        <item>Eagle</item>
+        <item>Stork</item>
     </string-array>
 
     <string-array name="Reptiles">
-        <item>Hammer Fish</item>
-        <item>Seahorse</item>
-        <item>Electric Eel</item>
-        <item>Salmon</item>
+        <item>Cobra Snake</item>
+        <item>Alligator</item>
+        <item>Turtle</item>
+        <item>Lizard</item>
     </string-array>
 
     <string-array name="Mammals">

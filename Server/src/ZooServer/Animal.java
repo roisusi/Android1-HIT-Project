@@ -1,29 +1,42 @@
-package com.example.rrszoo.Java;
+package ZooServer;
 
-import android.media.Image;
-import android.widget.LinearLayout;
 
+
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
 public class Animal {
+    private String type;
     private String name;
     private String location;
     private String lifetime;
     private String food;
     private String numberOfChildrens;
-    private Image image;
+    private String  image;
+    private List <String> animal;
 
-    public Animal(String name, String location, String lifetime, String food, String numberOfChildrens,Image image) {
+    public Animal(String type,String name, String location, String lifetime, String food, String numberOfChildrens,String  image) {
+        this.type = type;
         this.name = name;
         this.location = location;
         this.lifetime = lifetime;
         this.food = food;
         this.numberOfChildrens = numberOfChildrens;
         this.image = image;
+        animal = new ArrayList<>();
     }
     public Animal(List<String> Animal){
         //this(Animal.get(0).toString(),)
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -66,11 +79,22 @@ public class Animal {
         this.numberOfChildrens = numberOfChildrens;
     }
 
-    public Image getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(String image) {
         this.image = image;
+    }
+
+    public List<String> send(){
+        animal.add(this.getType());
+        animal.add(getName());
+        animal.add(getLocation());
+        animal.add(getLifetime());
+        animal.add(getFood());
+        animal.add(getNumberOfChildrens());
+        animal.add(getImage());
+        return animal;
     }
 }

@@ -28,9 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private Button login;
     private Button register;
     private ImageView title;
-    private List<String> message;
+    private List<String> messageToServer;
     private List<String> loginMessage;
-    private String okMessage="";
     private myTask mt;
     private Intent intent;
 
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.login);
         register = (Button) findViewById(R.id.register);
         title = (ImageView) findViewById(R.id.titleBar);
-        message = new ArrayList<>();
+        messageToServer = new ArrayList<>();
         loginMessage = new ArrayList<>();
 
 
@@ -83,32 +82,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void loginToServer(View view){
-
-//        Intent intent = new Intent(MainActivity.this, AnimalPage.class);
-//        startActivity(intent);
-
-        message.add("Login");
+        messageToServer.add("Login");
         EditText login = (EditText) findViewById(R.id.loginText);
-        message.add(login.getText().toString());
+        messageToServer.add(login.getText().toString());
         EditText pass = (EditText) findViewById(R.id.passText);
-        message.add(pass.getText().toString());
-        mt = new myTask(message,okMessage,MainActivity.this);
-        mt.execute(okMessage);
-
-
-    }
-
-    public void onClick(View view) {
-        //mt = new myTask(message,okMessage);
-        //mt.execute();
-        Toast.makeText(getApplicationContext(),"Data sent",Toast.LENGTH_LONG);
+        messageToServer.add(pass.getText().toString());
+        mt = new myTask(messageToServer,MainActivity.this);
+        mt.execute();
     }
 
     public void register(View view){
         //DataBase
     }
 
-    public String postLogin(List<String> s){
+    public void postLogin(List<String> s){
         loginMessage = s;
         Log.e(TAG, "test: " + loginMessage );
 
@@ -118,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("Admin",loginMessage.get(2));
             startActivity(intent);
         }
-        return okMessage;
     }
 
 }
