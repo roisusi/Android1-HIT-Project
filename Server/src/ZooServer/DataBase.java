@@ -2,23 +2,38 @@ package ZooServer;
 
 import java.sql.*;
 
+
 public class DataBase {
 
     private Connection con;
 
-    public String getUserName(int idu) throws SQLException {
-        //sipActivation.clear();
-        String selectSql = "select User from Users where idUsers="+idu;
+    public Login getUserName(String user , String pass) throws SQLException {
+        String selectSql = "select * from Users where Users ="+ "\""  + user + "\"" + "and Password=" + pass;
         Statement selectStatment = con.createStatement();
+        selectStatment.getResultSet();
+        ResultSet results = null;
+        try{
+            results = selectStatment.executeQuery(selectSql);
+        }
+        catch (SQLException e){
+            return null;
 
-        ResultSet results = selectStatment.executeQuery(selectSql);
+        }
+
         String name="";
+        String password="";
+        String Admin="";
+        String Email="";
         while (results.next()) {
-            name = results.getString("User");
+            name = results.getString("Users");
+            password = results.getString("Password");
+            Admin = results.getString("Admin");
+            Email = results.getString("Email");
+
         }
         selectStatment.close();
 
-        return name;
+        return new Login(name,password,Admin,Email);
     }
 
 
