@@ -19,10 +19,6 @@ class myTask extends AsyncTask<String,Void,String>
 {
 
     private static final String TAG = "myTask";
-    private static Socket s;
-    private static BufferedReader bufferedReader;
-    private static InputStreamReader inputStreamReader;
-    private static PrintWriter printWriter;
     private static String ip = "10.0.2.2";
     String message = "";
     List<String> login;
@@ -36,25 +32,22 @@ class myTask extends AsyncTask<String,Void,String>
     protected String doInBackground(String... strings) {
         try{
 
-            s = new Socket(ip,20000); //connect to server at port 20000
+            Socket s = new Socket(ip,20000); //connect to server at port 20000
+            PrintWriter pr = new PrintWriter(s.getOutputStream(), true); //set the output stream
 
-            printWriter = new PrintWriter(s.getOutputStream()); //set the output stream
             Gson gson = new Gson();
             String serializedLogIn = gson.toJson(login);
-            printWriter.write(serializedLogIn); // send the message through the socket
+            pr.println(serializedLogIn);
 
-            printWriter.flush();
-            printWriter.close();
-            login.clear();
-
-
+            InputStreamReader inputStreamReader = new InputStreamReader(s.getInputStream()); //to receive the data
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String message = bufferedReader.readLine();
             Log.d(TAG, "myTask: is" + message);
 
-//            inputStreamReader = new InputStreamReader(s.getInputStream()); //to receive the data
-//            bufferedReader = new BufferedReader(inputStreamReader);
-//            message = bufferedReader.readLine();
 
-
+            pr.flush();
+            pr.close();
+            login.clear();
             s.close();
 
 
