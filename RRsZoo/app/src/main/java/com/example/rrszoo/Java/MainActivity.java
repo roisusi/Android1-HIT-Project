@@ -29,7 +29,10 @@ public class MainActivity extends AppCompatActivity {
     private Button register;
     private ImageView title;
     private List<String> message;
-    myTask mt;
+    private List<String> loginMessage;
+    private String okMessage="";
+    private myTask mt;
+    private Intent intent;
 
 
     @Override
@@ -40,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         register = (Button) findViewById(R.id.register);
         title = (ImageView) findViewById(R.id.titleBar);
         message = new ArrayList<>();
+        loginMessage = new ArrayList<>();
+
+
     }
 
     public void registerUser(View view){
@@ -80,22 +86,21 @@ public class MainActivity extends AppCompatActivity {
 
 //        Intent intent = new Intent(MainActivity.this, AnimalPage.class);
 //        startActivity(intent);
-//        Intent intent = new Intent(MainActivity.this, MainPage.class);
-//        startActivity(intent);
+
         message.add("Login");
         EditText login = (EditText) findViewById(R.id.loginText);
         message.add(login.getText().toString());
         EditText pass = (EditText) findViewById(R.id.passText);
         message.add(pass.getText().toString());
+        mt = new myTask(message,okMessage,MainActivity.this);
+        mt.execute(okMessage);
 
-        mt = new myTask(message);
-        mt.execute();
 
     }
 
     public void onClick(View view) {
-        mt = new myTask(message);
-        mt.execute();
+        //mt = new myTask(message,okMessage);
+        //mt.execute();
         Toast.makeText(getApplicationContext(),"Data sent",Toast.LENGTH_LONG);
     }
 
@@ -103,6 +108,18 @@ public class MainActivity extends AppCompatActivity {
         //DataBase
     }
 
+    public String postLogin(List<String> s){
+        loginMessage = s;
+        Log.e(TAG, "test: " + loginMessage );
+
+        //Login login = new Login(okMessage);
+        if(loginMessage != null) {
+            intent = new Intent(getApplicationContext(), MainPage.class);
+            intent.putExtra("Admin",loginMessage.get(2));
+            startActivity(intent);
+        }
+        return okMessage;
+    }
 
 }
 

@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -19,11 +20,11 @@ import com.example.rrszoo.Fragments.FragmentAddAnimal;
 import com.example.rrszoo.Fragments.FragmentAnimals;
 import com.example.rrszoo.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 
 public class MainPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private static final String TAG = "MainPage" ;
     private Button seaAnimal;
     private Button mammals;
     private Button reptalis;
@@ -33,13 +34,14 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     private Spinner spinner;
     private Fragment fragment;
     private ImageView imageView;
-
+    private String gettingExtra;
     private int checkTypeOfAnimal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_page);
+        FloatingActionButton fab = findViewById(R.id.fab);
 
 
         imageView = (ImageView) findViewById(R.id.titleBar3);
@@ -50,16 +52,22 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         artth = (Button) findViewById(R.id.arthropoda);
 
         //For Admin Add new Animal to DataBase
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        gettingExtra = getIntent().getStringExtra("Admin");
+        Log.e(TAG, "onCreate: Login Admin " + gettingExtra);
+        if(gettingExtra.equals("true")) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 /*                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
-            fabFunc();
+                    fabFunc();
 
-            }
-        });
+                }
+            });
+        }
+        else {
+            fab.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void animalSelection(View view) {
@@ -161,6 +169,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), AnimalPage.class);
                 intent.putExtra("Animal", animal);
+                intent.putExtra("Admin", gettingExtra);
                 startActivity(intent);
             }
         });

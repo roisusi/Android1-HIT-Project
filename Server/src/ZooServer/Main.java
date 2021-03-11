@@ -19,6 +19,7 @@ public class Main {
     private static DataBase db;
     private static Login login;
 
+
     public static void main(String[] args) throws IOException {
         db = new DataBase();
         mgs = new ArrayList<>();
@@ -40,8 +41,10 @@ public class Main {
                             db.connect();
                             login = db.getUserName(mgs.get(1),mgs.get(2));
                             output = new PrintWriter(socket.getOutputStream(), true);
-                            System.out.println("User is : " + login.getLogin() + " and Password is : " + login.getPas());
-                            output.println("Login ok");
+                            System.out.println("User is : " + login.getLogin() + " and Password is : " + login.getPas()
+                            + " and email is : " + login.getEmail());
+                            String serializedLogIn = gson.toJson(login.send());
+                            output.println(serializedLogIn);
                             output.flush();
                         } catch (SQLException throwable) {
                             throwable.printStackTrace();

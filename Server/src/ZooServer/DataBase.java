@@ -10,17 +10,30 @@ public class DataBase {
     public Login getUserName(String user , String pass) throws SQLException {
         String selectSql = "select * from Users where Users ="+ "\""  + user + "\"" + "and Password=" + pass;
         Statement selectStatment = con.createStatement();
-        ResultSet results = selectStatment.executeQuery(selectSql);
+        selectStatment.getResultSet();
+        ResultSet results = null;
+        try{
+            results = selectStatment.executeQuery(selectSql);
+        }
+        catch (SQLException e){
+            return null;
+
+        }
 
         String name="";
         String password="";
+        String Admin="";
+        String Email="";
         while (results.next()) {
             name = results.getString("Users");
             password = results.getString("Password");
+            Admin = results.getString("Admin");
+            Email = results.getString("Email");
+
         }
         selectStatment.close();
 
-        return new Login(name,password);
+        return new Login(name,password,Admin,Email);
     }
 
 

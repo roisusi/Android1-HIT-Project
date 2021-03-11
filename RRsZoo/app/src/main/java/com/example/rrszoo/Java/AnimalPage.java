@@ -21,21 +21,25 @@ public class AnimalPage extends AppCompatActivity {
     private TextView lifetime;
     private TextView food;
     private TextView numOfChildres;
-    private String gettingExtra;
+    private String gettingExtraAnimal;
+    private String gettingExtraAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.animalpage);
 
-        gettingExtra = getIntent().getStringExtra("Animal");
-        Log.e(TAG, "onCreate: Animal " + gettingExtra);
+        gettingExtraAnimal = getIntent().getStringExtra("Animal");
+        Log.e(TAG, "onCreate: Animal " + gettingExtraAnimal);
+        gettingExtraAdmin = getIntent().getStringExtra("Admin");
+        Log.e(TAG, "onCreate: Admin " + gettingExtraAdmin);
         getFromDB();
         Button backToAnimalSelection = (Button)findViewById(R.id.backAnimal);
         backToAnimalSelection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),MainPage.class);
+                intent.putExtra("Admin",gettingExtraAdmin);
                 startActivity(intent);
             }
         });

@@ -1,7 +1,6 @@
-package ZooServer;
+package com.example.rrszoo.Java;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.security.acl.LastOwnerException;
 
 public class Login {
 
@@ -9,14 +8,12 @@ public class Login {
     private String pas;
     private String admin;
     private String email;
-    private List<String> logins;
 
     public Login(String login, String pas, String admin, String email) {
         this.login = login;
         this.pas = pas;
         this.admin = admin;
         this.email = email;
-        logins = new ArrayList<>();
     }
 
     public Login(String login, String pas) {
@@ -55,13 +52,5 @@ public class Login {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public List<String> send(){
-        logins.add(getLogin());
-        logins.add(getPas());
-        logins.add(getAdmin());
-        logins.add(getEmail());
-        return logins;
-    }
-
 }
+
