@@ -1,6 +1,10 @@
 package com.example.rrszoo.Java;
 
 import android.media.Image;
+import android.widget.LinearLayout;
+
+import java.util.List;
+import java.util.ListIterator;
 
 public class Animal {
     private String name;
@@ -17,6 +21,9 @@ public class Animal {
         this.food = food;
         this.numberOfChildrens = numberOfChildrens;
         this.image = image;
+    }
+    public Animal(List<String> Animal){
+        //this(Animal.get(0).toString(),)
     }
 
     public String getName() {

@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -21,21 +22,29 @@ import com.example.rrszoo.Fragments.FragmentAnimals;
 import com.example.rrszoo.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private static final String TAG = "MainPage" ;
+    private static final String TAG = "MainPage";
     private Button seaAnimal;
     private Button mammals;
     private Button reptalis;
     private Button birds;
     private Button artth;
     private FragmentManager fragmentManager;
-    private Spinner spinner;
+    private Spinner spinnerAnimals;
+    private Spinner spinnerTypes;
     private Fragment fragment;
     private ImageView imageView;
     private String gettingExtra;
-    private int checkTypeOfAnimal;
+    private List<String> animal;
+    private List<String> messageToServer;
+    private GetInformation getInformation;
+    private SendInformation sendInformation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +52,19 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         setContentView(R.layout.main_page);
         FloatingActionButton fab = findViewById(R.id.fab);
 
-
         imageView = (ImageView) findViewById(R.id.titleBar3);
         seaAnimal = (Button) findViewById(R.id.seaAnimals);
         mammals = (Button) findViewById(R.id.mammals);
         reptalis = (Button) findViewById(R.id.reptiles);
         birds = (Button) findViewById(R.id.birds);
         artth = (Button) findViewById(R.id.arthropoda);
+        animal = new ArrayList<>();
+        messageToServer = new ArrayList<>();
 
         //For Admin Add new Animal to DataBase
         gettingExtra = getIntent().getStringExtra("Admin");
         Log.e(TAG, "onCreate: Login Admin " + gettingExtra);
-        if(gettingExtra.equals("true")) {
+        if (gettingExtra.equals("true")) {
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -64,8 +74,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 
                 }
             });
-        }
-        else {
+        } else {
             fab.setVisibility(View.INVISIBLE);
         }
     }
@@ -77,29 +86,30 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         fragmentTransaction.add(R.id.animalFrag, fragment).addToBackStack(null).commit();
         fragmentManager.executePendingTransactions();
 
+
         switch (view.getId()) {
             case R.id.seaAnimals:
-                checkTypeOfAnimal = R.array.SeaAnimals;
+                getDataBaseTypes("Sea Animals");
                 break;
             case R.id.arthropoda:
-                checkTypeOfAnimal = R.array.Arthropoda;
+                getDataBaseTypes("Arthropoda");
                 break;
             case R.id.mammals:
-                checkTypeOfAnimal = R.array.Mammals;
+                getDataBaseTypes("Mammals");
                 break;
             case R.id.reptiles:
-                checkTypeOfAnimal = R.array.Reptiles;
+                getDataBaseTypes("Reptiles");
                 break;
             case R.id.birds:
-                checkTypeOfAnimal = R.array.Birds;
+                getDataBaseTypes("Birds");
                 break;
 
         }
 
-        openSpinner(checkTypeOfAnimal);
+
     }
 
-    public void backToAnimalMenu(View view){
+    public void backToAnimalMenu(View view) {
         fragmentManager.popBackStack();
         imageView.setVisibility(view.VISIBLE);
         seaAnimal.setVisibility(View.VISIBLE);
@@ -109,20 +119,33 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         artth.setVisibility(View.VISIBLE);
     }
 
-    private void openSpinner(int rArray) {
+    private void getDataBaseTypes(String animal) {
+        messageToServer.add("Type");
+        messageToServer.add(animal);
+        getInformation = new GetInformation(messageToServer, this);
+        getInformation.execute();
+    }
 
+    public void fillArrayToSpinner(List<String> list) {
+        animal = list;
+        openSpinner(animal);
+    }
 
-        spinner = findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, rArray, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+    private void openSpinner(List<String> types) {
+
+        spinnerAnimals = findViewById(R.id.spinner);
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,rArray , android.R.layout.simple_spinner_item);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, types);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinnerAnimals.setAdapter(adapter);
+        spinnerAnimals.setOnItemSelectedListener(this);
 
         seaAnimal.setVisibility(View.INVISIBLE);
         mammals.setVisibility(View.INVISIBLE);
         reptalis.setVisibility(View.INVISIBLE);
         birds.setVisibility(View.INVISIBLE);
         artth.setVisibility(View.INVISIBLE);
+
 
         Button back = (Button) findViewById(R.id.backToMainPage);
         back.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +162,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 
     }
 
-    public void fabFunc (){
+    public void fabFunc() {
         fragmentManager = getSupportFragmentManager();
         fragment = new FragmentAddAnimal();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -152,6 +175,35 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         birds.setVisibility(View.INVISIBLE);
         artth.setVisibility(View.INVISIBLE);
 
+
+        EditText name = (EditText) findViewById(R.id.addAnimalName);
+        EditText location = (EditText) findViewById(R.id.addLocation);
+        EditText lifeTime = (EditText) findViewById(R.id.addLifeTime);
+        EditText food = (EditText) findViewById(R.id.addFood);
+        EditText childrens = (EditText) findViewById(R.id.addChildrens);
+        EditText img = (EditText) findViewById(R.id.addImageLink);
+
+
+        spinnerTypes = findViewById(R.id.spinnerType);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Type , android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinnerTypes.setAdapter(adapter);
+        spinnerTypes.setOnItemSelectedListener(this);
+
+        messageToServer.clear();
+
+        messageToServer.add("AddAnimal");
+        messageToServer.add(name.getText().toString());
+        messageToServer.add(location.getText().toString());
+        messageToServer.add(lifeTime.getText().toString());
+        messageToServer.add(food.getText().toString());
+        messageToServer.add(childrens.getText().toString());
+        messageToServer.add(img.getText().toString());
+        messageToServer.add(spinnerTypes.getSelectedItem().toString());
+
+        sendInformation = new SendInformation(messageToServer,MainPage.this);
+        sendInformation.execute();
+
     }
 
     @Override
@@ -159,8 +211,6 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 //        String text = parent.getItemAtPosition(position).toString();
 //        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
         String animal = parent.getItemAtPosition(position).toString();
-
-        //
 
         Button select = (Button) findViewById(R.id.selectAnimal);
         select.setOnClickListener(new View.OnClickListener() {

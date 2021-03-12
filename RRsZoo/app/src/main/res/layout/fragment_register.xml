@@ -7,7 +7,7 @@
     tools:context=".Fragments.FragmentRegister">
 
     <EditText
-        android:id="@+id/loginText3"
+        android:id="@+id/loginReg"
         android:layout_width="210dp"
         android:layout_height="0dp"
         android:layout_marginBottom="24dp"
@@ -16,7 +16,7 @@
         android:inputType="textPersonName"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/passText3"
+        app:layout_constraintBottom_toTopOf="@+id/passReg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
@@ -32,10 +32,10 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/regToDataBase"
-        app:layout_constraintStart_toStartOf="@+id/passText3" />
+        app:layout_constraintStart_toStartOf="@+id/passReg" />
 
     <EditText
-        android:id="@+id/passText3"
+        android:id="@+id/passReg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
@@ -45,7 +45,7 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/emailReg"
-        app:layout_constraintStart_toStartOf="@+id/loginText3" />
+        app:layout_constraintStart_toStartOf="@+id/loginReg" />
 
     <Button
         android:id="@+id/regToDataBase"
@@ -53,16 +53,16 @@
         android:layout_height="57dp"
         android:layout_marginBottom="24dp"
         android:background="@drawable/buttonshape"
-        android:onClick="loginToServer"
+        android:onClick="register"
         android:text="Register"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toTopOf="@+id/backFrag2"
+        app:layout_constraintBottom_toTopOf="@+id/backFragReg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="OnClick" />
 
     <Button
-        android:id="@+id/backFrag2"
+        android:id="@+id/backFragReg"
         android:layout_width="186dp"
         android:layout_height="57dp"
         android:layout_marginBottom="200dp"

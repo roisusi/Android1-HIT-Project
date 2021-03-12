@@ -2,10 +2,8 @@ package com.example.rrszoo.Java;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -21,23 +19,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-class myTask extends AsyncTask<String,Void,String>
+class GetInformation extends AsyncTask<String,Void,String>
 {
 
-    private static final String TAG = "myTask";
+    private static final String TAG = "GetInformation";
     private static String ip = "10.0.2.2";
     private static String okMessage="";
     private static List<String> backFromServer;
-    private static List<String> login;
+    private static List<String> sendToServer;
     private static Activity activity;
 
-    public myTask(List<String> message,String okMessages,Activity activity) {
+    public GetInformation(List<String> message, Activity activity) {
+
         this.backFromServer = new ArrayList<>();
+
         this.activity = activity;
-        this.okMessage = okMessages;
-        login = new ArrayList<>();
-        this.login = message;
+
+        sendToServer = new ArrayList<>();
+        this.sendToServer = message;
     }
+
 
     @Override
     protected String doInBackground(String... strings) {
@@ -47,23 +48,22 @@ class myTask extends AsyncTask<String,Void,String>
             PrintWriter pr = new PrintWriter(s.getOutputStream(), true); //set the output stream
 
             Gson gson = new Gson();
-            String serializedLogIn = gson.toJson(login);
+            String serializedLogIn = gson.toJson(sendToServer);
             pr.println(serializedLogIn);
 
             InputStreamReader inputStreamReader = new InputStreamReader(s.getInputStream()); //to receive the data
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
             okMessage = bufferedReader.readLine();
-            if (okMessage != null)
-                backFromServer = gson.fromJson(okMessage,ArrayList.class);
+            if (okMessage != null) {
+                backFromServer = gson.fromJson(okMessage, ArrayList.class);
+            }
 
             Log.d(TAG, "myTask: is " + backFromServer);
-            strings[0] = okMessage;
-            Log.d(TAG, "myTask: is strings " + strings[0]);
 
             pr.flush();
             pr.close();
-            login.clear();
+            sendToServer.clear();
             s.close();
 
 
@@ -79,15 +79,36 @@ class myTask extends AsyncTask<String,Void,String>
             if (activity instanceof MainActivity && backFromServer.isEmpty()) {
                 openLoginAlert();
             }
-            else {
+            else if (activity instanceof MainActivity){
 
                 MainActivity activity = (MainActivity) this.activity;
                 activity.postLogin(backFromServer);
             }
 
+        if (activity instanceof AnimalPage && backFromServer.isEmpty()) {
+            openLoginAlert();
+        }
+        else if (activity instanceof AnimalPage) {
+
+            AnimalPage activity = (AnimalPage) this.activity;
+            activity.SetAnimalFromDataBase(backFromServer);
+        }
+
+        if (activity instanceof MainPage && backFromServer.isEmpty()) {
+            openLoginAlert();
+        }
+        else if (activity instanceof MainPage) {
+
+            MainPage activity = (MainPage) this.activity;
+            activity.fillArrayToSpinner(backFromServer);
+        }
+
         super.onPostExecute(s);
     }
 
+    //-----------------//
+    //Alert  For Login //
+    //-----------------//
     public void openLoginAlert(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
         alertDialogBuilder.setMessage("You have Enter Wrong User/Password");
