@@ -15,9 +15,9 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string-array name="Type">
-        <item>SeaAnimals</item>
+        <item>Sea Animals</item>
         <item>Arthropoda</item>
-        <item>Birds Eel</item>
+        <item>Birds</item>
         <item>Reptiles</item>
         <item>Mammals</item>
     </string-array>
