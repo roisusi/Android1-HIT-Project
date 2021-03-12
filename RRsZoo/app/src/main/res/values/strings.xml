@@ -12,38 +12,12 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
-    <string-array name="SeaAnimals">
-        <item>Hammer Fish</item>
-        <item>Seahorse</item>
-        <item>Electric Eel</item>
-        <item>Salmon</item>
+    <string-array name="Type">
+        <item>SeaAnimals</item>
+        <item>Arthropoda</item>
+        <item>Birds Eel</item>
+        <item>Reptiles</item>
+        <item>Mammals</item>
     </string-array>
 
-    <string-array name="Arthropoda">
-        <item>Yellow Scorpion</item>
-        <item>Black Widow</item>
-        <item>Octopus</item>
-        <item>Garden Snail</item>
-    </string-array>
-
-    <string-array name="Birds">
-        <item>Hoopoe</item>
-        <item>Owl</item>
-        <item>Eagle</item>
-        <item>Stork</item>
-    </string-array>
-
-    <string-array name="Reptiles">
-        <item>Cobra Snake</item>
-        <item>Alligator</item>
-        <item>Turtle</item>
-        <item>Lizard</item>
-    </string-array>
-
-    <string-array name="Mammals">
-        <item>Lion</item>
-        <item>Cat</item>
-        <item>Rabbit</item>
-        <item>Squirrel</item>
-    </string-array>
 </resources>

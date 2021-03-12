@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -34,14 +35,15 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     private Button birds;
     private Button artth;
     private FragmentManager fragmentManager;
-    private Spinner spinner;
+    private Spinner spinnerAnimals;
+    private Spinner spinnerTypes;
     private Fragment fragment;
     private ImageView imageView;
     private String gettingExtra;
-    private int checkTypeOfAnimal;
     private List<String> animal;
     private List<String> messageToServer;
-    private GetInformation mt;
+    private GetInformation getInformation;
+    private SendInformation sendInformation;
 
 
     @Override
@@ -120,8 +122,8 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     private void getDataBaseTypes(String animal) {
         messageToServer.add("Type");
         messageToServer.add(animal);
-        mt = new GetInformation(messageToServer, this);
-        mt.execute();
+        getInformation = new GetInformation(messageToServer, this);
+        getInformation.execute();
     }
 
     public void fillArrayToSpinner(List<String> list) {
@@ -131,14 +133,12 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 
     private void openSpinner(List<String> types) {
 
-
-
-        spinner = findViewById(R.id.spinner);
+        spinnerAnimals = findViewById(R.id.spinner);
         //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,rArray , android.R.layout.simple_spinner_item);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, types);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        spinnerAnimals.setAdapter(adapter);
+        spinnerAnimals.setOnItemSelectedListener(this);
 
         seaAnimal.setVisibility(View.INVISIBLE);
         mammals.setVisibility(View.INVISIBLE);
@@ -174,6 +174,35 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         reptalis.setVisibility(View.INVISIBLE);
         birds.setVisibility(View.INVISIBLE);
         artth.setVisibility(View.INVISIBLE);
+
+
+        EditText name = (EditText) findViewById(R.id.addAnimalName);
+        EditText location = (EditText) findViewById(R.id.addLocation);
+        EditText lifeTime = (EditText) findViewById(R.id.addLifeTime);
+        EditText food = (EditText) findViewById(R.id.addFood);
+        EditText childrens = (EditText) findViewById(R.id.addChildrens);
+        EditText img = (EditText) findViewById(R.id.addImageLink);
+
+
+        spinnerTypes = findViewById(R.id.spinnerType);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Type , android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinnerTypes.setAdapter(adapter);
+        spinnerTypes.setOnItemSelectedListener(this);
+
+        messageToServer.clear();
+
+        messageToServer.add("AddAnimal");
+        messageToServer.add(name.getText().toString());
+        messageToServer.add(location.getText().toString());
+        messageToServer.add(lifeTime.getText().toString());
+        messageToServer.add(food.getText().toString());
+        messageToServer.add(childrens.getText().toString());
+        messageToServer.add(img.getText().toString());
+        messageToServer.add(spinnerTypes.getSelectedItem().toString());
+
+        sendInformation = new SendInformation(messageToServer,MainPage.this);
+        sendInformation.execute();
 
     }
 

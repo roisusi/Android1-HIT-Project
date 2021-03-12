@@ -10,7 +10,7 @@
         android:id="@+id/addFood"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Food"
         android:inputType="textPersonName"
@@ -20,10 +20,10 @@
         app:layout_constraintTop_toBottomOf="@+id/addLifeTime" />
 
     <EditText
-        android:id="@+id/addFood2"
+        android:id="@+id/addChildrens"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Childrens"
         android:inputType="textPersonName"
@@ -33,10 +33,23 @@
         app:layout_constraintTop_toBottomOf="@+id/addFood" />
 
     <EditText
+        android:id="@+id/addImageLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="Image Link"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/addChildrens"
+        app:layout_constraintTop_toBottomOf="@+id/addChildrens" />
+
+    <EditText
         android:id="@+id/addLifeTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="LifeTime"
         android:inputType="textPersonName"
@@ -79,7 +92,7 @@
         android:id="@+id/addLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Location"
         android:inputType="textPersonName"
@@ -97,7 +110,17 @@
         android:text="Add"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addFood2"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerType"
         tools:ignore="OnClick" />
+
+    <Spinner
+        android:id="@+id/spinnerType"
+        android:layout_width="240dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/addImageLink"
+        app:layout_constraintStart_toStartOf="@+id/addImageLink"
+        app:layout_constraintTop_toBottomOf="@+id/addImageLink" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -144,6 +144,51 @@ public class DataBase {
         }
     }
 
+    public String addAnimal(AddAnimal addAnimal) throws SQLException {
+
+        String selectSql = "select * from Animals where Type =" + "\"" + addAnimal.getType() + "\"" + " and " + addAnimal.getName();
+        Statement selectStatment = con.createStatement();
+        selectStatment.getResultSet();
+        ResultSet results = null;
+        try {
+            results = selectStatment.executeQuery(selectSql);
+        } catch (SQLException e) {
+
+        }
+
+        String name = "";
+        while (results.next()) {
+            name = results.getString("Name");
+
+        }
+        selectStatment.close();
+
+
+        String returnStr = "";
+
+        if (name.isEmpty()) {
+
+            String insertSql = "insert into Animals (Type,Name,Location,LifeTime,Food,NumOfChildrens,ImageURI) values(?,?,?,?,?,?,?)";
+            PreparedStatement insertStmt = con.prepareStatement(insertSql);
+            int i = 1;
+
+            int col = 1;
+            insertStmt.setString(col++, addAnimal.getType());
+            insertStmt.setString(col++, addAnimal.getName());
+            insertStmt.setString(col++, addAnimal.getLocation());
+            insertStmt.setString(col++, addAnimal.getLifetime());
+            insertStmt.setString(col++, addAnimal.getFood());
+            insertStmt.setString(col++, addAnimal.getNumberOfChildrens());
+            insertStmt.setString(col++, addAnimal.getImage());
+            insertStmt.executeUpdate();
+
+            insertStmt.close();
+            return returnStr = "OK";
+        } else {
+            return returnStr = "NOT OK";
+        }
+    }
+
     //                          //
     //  Connection To DataBase  //
     //                          //

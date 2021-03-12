@@ -20,6 +20,7 @@ public class Main {
     private static Login login;
     private static Animal animal;
     private static Register register;
+    private static AddAnimal addAnimal;
     private static ArrayList<String> listOfTime;
     private static ArrayList<String> tempArray;
 
@@ -93,6 +94,22 @@ public class Main {
                             tempArray.add(db.register(register));
                             output = new PrintWriter(socket.getOutputStream(), true);
                             System.out.println("Detail of register is : " + mgs );
+                            System.out.println("is OK ? : " + tempArray );
+                            String serializedLogIn = gson.toJson(tempArray);
+                            output.println(serializedLogIn);
+                            output.flush();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case "AddAnimal":
+                        try {
+                            db.connect();
+                            tempArray = new ArrayList<>();
+                            addAnimal = new AddAnimal(mgs.get(1),mgs.get(2),mgs.get(3),mgs.get(4),mgs.get(5),mgs.get(6),mgs.get(7));
+                            tempArray.add(db.addAnimal(addAnimal));
+                            output = new PrintWriter(socket.getOutputStream(), true);
+                            System.out.println("Detail of Animal is : " + mgs );
                             System.out.println("is OK ? : " + tempArray );
                             String serializedLogIn = gson.toJson(tempArray);
                             output.println(serializedLogIn);
