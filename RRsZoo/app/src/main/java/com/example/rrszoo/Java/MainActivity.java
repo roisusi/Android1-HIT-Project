@@ -28,8 +28,10 @@ public class MainActivity extends AppCompatActivity {
     private Button register;
     private ImageView title;
     private List<String> messageToServer;
-    private List<String> loginMessage;
-    private myTask mt;
+    private List<String> stringFromServer;
+    private GetInformation getInformation;
+    private SendInformation sendInformation;
+
     private Intent intent;
 
 
@@ -41,15 +43,23 @@ public class MainActivity extends AppCompatActivity {
         register = (Button) findViewById(R.id.register);
         title = (ImageView) findViewById(R.id.titleBar);
         messageToServer = new ArrayList<>();
-        loginMessage = new ArrayList<>();
+        //stringToServer = new ArrayList<>();
 
 
     }
 
-    public void registerUser(View view){
+    public void registerUser(View view) {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentReg, new FragmentRegister()).addToBackStack(null).commit();
+
+//        Button backLog = (Button) findViewById(R.id.backFragReg);
+//        backLog.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                backToMain();
+//            }
+//        });
 
         login.setVisibility(View.INVISIBLE);
         register.setVisibility(View.INVISIBLE);
@@ -61,6 +71,14 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentLog, new FragmentLogin()).addToBackStack(null).commit();
+
+//        Button backReg = (Button) findViewById(R.id.backFragLogin);
+//        backReg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                backToMain();
+//            }
+//        });
 
         login.setVisibility(View.INVISIBLE);
         register.setVisibility(View.INVISIBLE);
@@ -80,28 +98,42 @@ public class MainActivity extends AppCompatActivity {
             title.setVisibility(View.VISIBLE);
         }
     }
-    public void loginToServer(View view){
+
+    public void loginToServer(View view) {
+        messageToServer.clear();
         messageToServer.add("Login");
         EditText login = (EditText) findViewById(R.id.loginText);
         messageToServer.add(login.getText().toString());
         EditText pass = (EditText) findViewById(R.id.passText);
         messageToServer.add(pass.getText().toString());
-        mt = new myTask(messageToServer,MainActivity.this);
-        mt.execute();
+        getInformation = new GetInformation(messageToServer, MainActivity.this);
+        getInformation.execute();
     }
 
-    public void register(View view){
-        //DataBase
+    public void register(View view) {
+        messageToServer.clear();
+        EditText login = (EditText) findViewById(R.id.loginReg);
+        EditText pass = (EditText) findViewById(R.id.passReg);
+        EditText email = (EditText) findViewById(R.id.emailReg);
+
+        messageToServer.add("Register");
+        messageToServer.add(login.getText().toString());
+        messageToServer.add(pass.getText().toString());
+        messageToServer.add("false");
+        messageToServer.add(email.getText().toString());
+        sendInformation = new SendInformation(messageToServer, MainActivity.this,view);
+        sendInformation.execute();
+
     }
 
-    public void postLogin(List<String> s){
-        loginMessage = s;
-        Log.e(TAG, "test: " + loginMessage );
+    public void postLogin(List<String> s) {
+        stringFromServer = s;
+        Log.e(TAG, "test: " + stringFromServer);
 
         //Login login = new Login(okMessage);
-        if(loginMessage != null) {
+        if (stringFromServer != null) {
             intent = new Intent(getApplicationContext(), MainPage.class);
-            intent.putExtra("Admin",loginMessage.get(2));
+            intent.putExtra("Admin", stringFromServer.get(2));
             startActivity(intent);
         }
     }

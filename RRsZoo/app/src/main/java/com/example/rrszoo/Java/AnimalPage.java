@@ -29,7 +29,7 @@ public class AnimalPage extends AppCompatActivity {
 
     private List<String> messageToServer;
     private List<String> AnimalMessage;
-    private myTask mt;
+    private GetInformation mt;
 
 
 
@@ -65,7 +65,7 @@ public class AnimalPage extends AppCompatActivity {
 
         messageToServer.add("Animal");
         messageToServer.add(gettingExtraAnimal);
-        mt = new myTask(messageToServer,this);
+        mt = new GetInformation(messageToServer,this);
         mt.execute();
 
     }

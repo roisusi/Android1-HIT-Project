@@ -3,29 +3,29 @@ package ZooServer;
 import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DataBase {
 
     private Connection con;
 
-    public Login loginPage(String user , String pass) throws SQLException {
-        String selectSql = "select * from Users where Users ="+ "\""  + user + "\"" + "and Password=" + pass;
+    public Login loginPage(String user, String pass) throws SQLException {
+        String selectSql = "select * from Users where Users =" + "\"" + user + "\"" + "and Password=" + pass;
         Statement selectStatment = con.createStatement();
         selectStatment.getResultSet();
         ResultSet results = null;
-        try{
+        try {
             results = selectStatment.executeQuery(selectSql);
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             return null;
 
         }
 
-        String name="";
-        String password="";
-        String Admin="";
-        String Email="";
+        String name = "";
+        String password = "";
+        String Admin = "";
+        String Email = "";
         while (results.next()) {
             name = results.getString("Users");
             password = results.getString("Password");
@@ -35,30 +35,29 @@ public class DataBase {
         }
         selectStatment.close();
 
-        return new Login(name,password,Admin,Email);
+        return new Login(name, password, Admin, Email);
     }
 
     public Animal animalPage(String animal) throws SQLException {
 
-        String selectSql = "select * from Animals where Name ="+ "\""  + animal + "\"";
+        String selectSql = "select * from Animals where Name =" + "\"" + animal + "\"";
         Statement selectStatment = con.createStatement();
         selectStatment.getResultSet();
         ResultSet results = null;
-        try{
+        try {
             results = selectStatment.executeQuery(selectSql);
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             return null;
 
         }
 
-        String type="";
-        String name="";
-        String location="";
-        String lifetime="";
-        String food="";
-        String numberOfChildrens="";
-        String imageURI="";
+        String type = "";
+        String name = "";
+        String location = "";
+        String lifetime = "";
+        String food = "";
+        String numberOfChildrens = "";
+        String imageURI = "";
 
         while (results.next()) {
             type = results.getString("Type");
@@ -73,20 +72,19 @@ public class DataBase {
         selectStatment.close();
 
 
-        return new Animal(type,name,location,lifetime,food,numberOfChildrens,imageURI);
+        return new Animal(type, name, location, lifetime, food, numberOfChildrens, imageURI);
     }
 
 
     public ArrayList<String> getTypesToSpinner(String Type) throws SQLException {
 
-        String selectSql = "select * from Animals where Type ="+ "\""  + Type + "\"";
+        String selectSql = "select * from Animals where Type =" + "\"" + Type + "\"";
         Statement selectStatment = con.createStatement();
         selectStatment.getResultSet();
         ResultSet results = null;
-        try{
+        try {
             results = selectStatment.executeQuery(selectSql);
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             return null;
 
         }
@@ -102,12 +100,57 @@ public class DataBase {
 
     }
 
+    //                    //
+    // Insert to DataBase //
+    //                    //
+
+    public String register(Register register) throws SQLException {
+
+        String selectSql = "select * from Users where Users =" + "\"" + register.getName() + "\"";
+        Statement selectStatment = con.createStatement();
+        selectStatment.getResultSet();
+        ResultSet results = null;
+        try {
+            results = selectStatment.executeQuery(selectSql);
+        } catch (SQLException e) {
+
+        }
+        String name = "";
+        while (results.next()) {
+            name = results.getString("Users");
+        }
+        selectStatment.close();
+
+
+        String returnStr = "";
+
+        if (name.isEmpty()) {
+
+            String insertSql = "insert into Users (Users,Password,Admin,Email) values(?,?,?,?)";
+            PreparedStatement insertStmt = con.prepareStatement(insertSql);
+            int i = 1;
+
+            int col = 1;
+            insertStmt.setString(col++, register.getName());
+            insertStmt.setString(col++, register.getPassword());
+            insertStmt.setString(col++, register.getAdmin());
+            insertStmt.setString(col++, register.getEmail());
+            insertStmt.executeUpdate();
+
+            insertStmt.close();
+            return returnStr = "OK";
+        } else {
+            return returnStr = "NOT OK";
+        }
+    }
+
     //                          //
     //  Connection To DataBase  //
     //                          //
     public void connect() throws Exception {
         con = DatabaseConnection.getInstance().getConnection();
     }
+
     public void disconnect() {
         if (con != null) {
             try {
@@ -118,6 +161,7 @@ public class DataBase {
             }
         }
     }
+
     public Connection getCon() {
         return con;
     }

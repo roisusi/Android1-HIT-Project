@@ -19,7 +19,9 @@ public class Main {
     private static DataBase db;
     private static Login login;
     private static Animal animal;
+    private static Register register;
     private static ArrayList<String> listOfTime;
+    private static ArrayList<String> tempArray;
 
 
     public static void main(String[] args) throws IOException {
@@ -83,6 +85,23 @@ public class Main {
                             e.printStackTrace();
                         }
                             break;
+                    case "Register":
+                        try {
+                            db.connect();
+                            tempArray = new ArrayList<>();
+                            register = new Register(mgs.get(1),mgs.get(2),mgs.get(3),mgs.get(4));
+                            tempArray.add(db.register(register));
+                            output = new PrintWriter(socket.getOutputStream(), true);
+                            System.out.println("Detail of register is : " + mgs );
+                            System.out.println("is OK ? : " + tempArray );
+                            String serializedLogIn = gson.toJson(tempArray);
+                            output.println(serializedLogIn);
+                            output.flush();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+
 
                 }
 

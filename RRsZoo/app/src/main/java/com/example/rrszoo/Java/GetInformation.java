@@ -2,10 +2,8 @@ package com.example.rrszoo.Java;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -21,24 +19,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-class myTask extends AsyncTask<String,Void,String>
+class GetInformation extends AsyncTask<String,Void,String>
 {
 
-    private static final String TAG = "myTask";
+    private static final String TAG = "GetInformation";
     private static String ip = "10.0.2.2";
     private static String okMessage="";
     private static List<String> backFromServer;
-    private static List<String> login;
+    private static List<String> sendToServer;
     private static Activity activity;
 
-    public myTask(List<String> message,Activity activity) {
+    public GetInformation(List<String> message, Activity activity) {
 
         this.backFromServer = new ArrayList<>();
 
         this.activity = activity;
 
-        login = new ArrayList<>();
-        this.login = message;
+        sendToServer = new ArrayList<>();
+        this.sendToServer = message;
     }
 
 
@@ -50,7 +48,7 @@ class myTask extends AsyncTask<String,Void,String>
             PrintWriter pr = new PrintWriter(s.getOutputStream(), true); //set the output stream
 
             Gson gson = new Gson();
-            String serializedLogIn = gson.toJson(login);
+            String serializedLogIn = gson.toJson(sendToServer);
             pr.println(serializedLogIn);
 
             InputStreamReader inputStreamReader = new InputStreamReader(s.getInputStream()); //to receive the data
@@ -65,7 +63,7 @@ class myTask extends AsyncTask<String,Void,String>
 
             pr.flush();
             pr.close();
-            login.clear();
+            sendToServer.clear();
             s.close();
 
 

@@ -41,7 +41,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     private int checkTypeOfAnimal;
     private List<String> animal;
     private List<String> messageToServer;
-    private myTask mt;
+    private GetInformation mt;
 
 
     @Override
@@ -120,7 +120,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     private void getDataBaseTypes(String animal) {
         messageToServer.add("Type");
         messageToServer.add(animal);
-        mt = new myTask(messageToServer, this);
+        mt = new GetInformation(messageToServer, this);
         mt.execute();
     }
 
@@ -145,7 +145,6 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         reptalis.setVisibility(View.INVISIBLE);
         birds.setVisibility(View.INVISIBLE);
         artth.setVisibility(View.INVISIBLE);
-
 
 
         Button back = (Button) findViewById(R.id.backToMainPage);
