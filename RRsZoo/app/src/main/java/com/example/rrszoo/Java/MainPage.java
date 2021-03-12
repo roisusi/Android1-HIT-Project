@@ -19,6 +19,7 @@ import android.widget.Spinner;
 
 import com.example.rrszoo.Fragments.FragmentAddAnimal;
 import com.example.rrszoo.Fragments.FragmentAnimals;
+import com.example.rrszoo.Fragments.FragmentRegister;
 import com.example.rrszoo.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -38,19 +39,21 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     private Spinner spinnerAnimals;
     private Spinner spinnerTypes;
     private Fragment fragment;
+    private FragmentAddAnimal fragmentAddAnimalal;
     private ImageView imageView;
     private String gettingExtra;
     private List<String> animal;
     private List<String> messageToServer;
     private GetInformation getInformation;
     private SendInformation sendInformation;
+    private FloatingActionButton fab;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_page);
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
 
         imageView = (ImageView) findViewById(R.id.titleBar3);
         seaAnimal = (Button) findViewById(R.id.seaAnimals);
@@ -164,10 +167,11 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 
     public void fabFunc() {
         fragmentManager = getSupportFragmentManager();
-        fragment = new FragmentAddAnimal();
+        fragmentAddAnimalal = new FragmentAddAnimal();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.addAnimalFrag, fragment).addToBackStack(null).commit();
+        fragmentTransaction.add(R.id.addAnimalFrag, fragmentAddAnimalal).addToBackStack(null).commit();
 
+        fab.setVisibility(View.INVISIBLE);
         imageView.setVisibility(View.INVISIBLE);
         seaAnimal.setVisibility(View.INVISIBLE);
         mammals.setVisibility(View.INVISIBLE);
@@ -175,6 +179,11 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         birds.setVisibility(View.INVISIBLE);
         artth.setVisibility(View.INVISIBLE);
 
+
+    }
+
+
+    public void addAnimal(View view) {
 
         EditText name = (EditText) findViewById(R.id.addAnimalName);
         EditText location = (EditText) findViewById(R.id.addLocation);
@@ -184,24 +193,20 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         EditText img = (EditText) findViewById(R.id.addImageLink);
 
 
-        spinnerTypes = findViewById(R.id.spinnerType);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Type , android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinnerTypes.setAdapter(adapter);
-        spinnerTypes.setOnItemSelectedListener(this);
-
         messageToServer.clear();
 
+        spinnerTypes = fragmentAddAnimalal.getSpinner();
+
         messageToServer.add("AddAnimal");
+        messageToServer.add(spinnerTypes.getSelectedItem().toString());
         messageToServer.add(name.getText().toString());
         messageToServer.add(location.getText().toString());
         messageToServer.add(lifeTime.getText().toString());
         messageToServer.add(food.getText().toString());
         messageToServer.add(childrens.getText().toString());
         messageToServer.add(img.getText().toString());
-        messageToServer.add(spinnerTypes.getSelectedItem().toString());
 
-        sendInformation = new SendInformation(messageToServer,MainPage.this);
+        sendInformation = new SendInformation(messageToServer, MainPage.this);
         sendInformation.execute();
 
     }

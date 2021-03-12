@@ -124,7 +124,7 @@ public class DataBase {
 
         String returnStr = "";
 
-        if (name.isEmpty()) {
+        if (results != null && name.isEmpty()) {
 
             String insertSql = "insert into Users (Users,Password,Admin,Email) values(?,?,?,?)";
             PreparedStatement insertStmt = con.prepareStatement(insertSql);
@@ -157,7 +157,7 @@ public class DataBase {
         }
 
         String name = "";
-        while (results.next()) {
+        while (results != null && results.next()) {
             name = results.getString("Name");
 
         }
