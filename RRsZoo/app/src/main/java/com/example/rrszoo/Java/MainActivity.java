@@ -35,11 +35,13 @@ public class MainActivity extends AppCompatActivity {
     private SendInformation sendInformation;
     private FragmentLogin fragmentLogin;
     private Intent intent;
+    private ZooLanguage zooLanguage;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        zooLanguage = new ZooLanguage(getSharedPreferences("RRsZoo", MODE_PRIVATE));
         setContentView(R.layout.activity_main);
         login = (Button) findViewById(R.id.loginFirstPage);
         register = (Button) findViewById(R.id.registerFirstPage);
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     public void registerUser(View view) {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragmentReg, new FragmentRegister()).addToBackStack(null).commit();
+        fragmentTransaction.add(R.id.fragmentReg, new FragmentRegister(zooLanguage.isEnglish())).addToBackStack(null).commit();
 
         login.setVisibility(View.INVISIBLE);
         register.setVisibility(View.INVISIBLE);

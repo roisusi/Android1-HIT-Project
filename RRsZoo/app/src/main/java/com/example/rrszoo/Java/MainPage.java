@@ -57,12 +57,14 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     private FloatingActionButton fab;
     private Menu menu;
     private MenuInflater inflater;
+    ZooLanguage zooLanguage;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_page);
+         zooLanguage = new ZooLanguage(getSharedPreferences("RRsZoo", MODE_PRIVATE));
+        setContentView(zooLanguage.isEnglish() ?  R.layout.main_page : R.layout.main_page_heb);
         fab = findViewById(R.id.fab);
 
         imageView = (ImageView) findViewById(R.id.titleBar3);
@@ -99,7 +101,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 
     public void animalSelection(View view) {
         fragmentManager = getSupportFragmentManager();
-        fragmentAnimalPage = new FragmentAnimals();
+        fragmentAnimalPage = new FragmentAnimals(zooLanguage.isEnglish());
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.animalFrag, fragmentAnimalPage).addToBackStack(null).commit();
         fragmentManager.executePendingTransactions();

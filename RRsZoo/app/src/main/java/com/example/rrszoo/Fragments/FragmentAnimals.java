@@ -24,6 +24,7 @@ public class FragmentAnimals extends Fragment{
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    boolean isEnglish = true;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -33,6 +34,11 @@ public class FragmentAnimals extends Fragment{
 
     public FragmentAnimals() {
         // Required empty public constructor
+    }
+
+    public FragmentAnimals(boolean isEnglish) {
+        // Required empty public constructor
+        this.isEnglish = isEnglish;
     }
 
     /**
@@ -73,6 +79,6 @@ public class FragmentAnimals extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_animals, container, false);
+        return inflater.inflate(isEnglish ? R.layout.fragment_animals : R.layout.fragment_animals_heb, container, false);
     }
 }

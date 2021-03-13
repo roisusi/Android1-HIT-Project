@@ -6,23 +6,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.rrszoo.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountInfo extends SimpleZooActivity {
+public class AccountInfo extends AppCompatActivity {
 
     private GetInformation getInformation;
     private SendInformation sendInformation;
     private List<String> messageToServer;
     private List<String> stringFromServer;
+    ZooLanguage zooLanguage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(this.isEnglish ?  R.layout.activity_account_info : R.layout.activity_account_info_heb);
+        zooLanguage = new ZooLanguage(getSharedPreferences("RRsZoo", MODE_PRIVATE));
+        setContentView(zooLanguage.isEnglish() ?  R.layout.activity_account_info : R.layout.activity_account_info_heb);
         getAccountInfo();
 
         Button back = (Button) findViewById(R.id.backAcc);
@@ -35,14 +38,6 @@ public class AccountInfo extends SimpleZooActivity {
             }
         });
     }
-
-    /*private void setLanguage() {
-        this.setTextViewText(R.id.titleAcc, "Account Information", "פרטי משתמש");
-        this.setTextViewText(R.id.NameAcc, "Name:", "שם:");
-        this.setTextViewText(R.id.emailAcc, "Email:", "אימייל:");
-        this.setTextViewText(R.id.adminAcc, "Admin:", "מנהל:");
-        this.changeLanguage();
-    }*/
 
     private void getAccountInfo() {
         messageToServer = new ArrayList<>();
