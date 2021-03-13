@@ -139,6 +139,9 @@ public class FragmentLogin extends Fragment {
         setLoginDetails(null, null);
     }
 
+    public boolean rememberLogin(){
+        return true;
+    }
 
 
 }

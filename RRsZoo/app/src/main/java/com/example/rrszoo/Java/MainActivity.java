@@ -1,10 +1,12 @@
 package com.example.rrszoo.Java;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         //Hide the Menu Bar
         getSupportActionBar().hide();
 
+
     }
 
     public void registerUser(View view) {
@@ -61,10 +64,20 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void loginFrag(View view) {
+        fragmentLogin = new  FragmentLogin();
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentLogin = new  FragmentLogin();
         fragmentTransaction.add(R.id.fragmentLog, fragmentLogin).addToBackStack(null).commit();
+
+        if (fragmentLogin.rememberLogin()){
+//            loginToServer(view);
+//            intent = new Intent(getApplicationContext(), MainPage.class);
+//            intent.putExtra("Admin", stringFromServer.get(2));
+//            startActivity(intent);
+        }
+        else{
+
+        }
 
         login.setVisibility(View.INVISIBLE);
         register.setVisibility(View.INVISIBLE);
@@ -113,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void postLogin(List<String> s) {
         stringFromServer = s;
         Log.e(TAG, "test: " + stringFromServer);
