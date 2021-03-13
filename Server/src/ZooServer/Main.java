@@ -40,11 +40,11 @@ public class Main {
                 message = br.readLine();
                 mgs = gson.fromJson(message, ArrayList.class);
 
-                switch (mgs.get(0)) {
+                switch (mgs.get(1)) {
                     case "Login":
                         try {
                             db.connect();
-                            login = db.loginPage(mgs.get(1),mgs.get(2));
+                            login = db.loginPage(mgs.get(2),mgs.get(3));
                             output = new PrintWriter(socket.getOutputStream(), true);
                             System.out.println("User is : " + login.getLogin() + " and Password is : " + login.getPas()
                             + " and email is : " + login.getEmail());
@@ -61,7 +61,13 @@ public class Main {
                         case "Animal":
                         try {
                             db.connect();
-                            animal = db.animalPage(mgs.get(1));
+                            if(mgs.get(0).equals("He")){
+                                animal = db.animalPageHeb(mgs.get(2));
+                            }
+                            else {
+                                animal = db.animalPage(mgs.get(2));
+                            }
+
                             output = new PrintWriter(socket.getOutputStream(), true);
                             System.out.println("Animal is : " + animal.send() );
                             String serializedLogIn = gson.toJson(animal.send());
@@ -76,7 +82,12 @@ public class Main {
                     case "Type":
                         try {
                             db.connect();
-                            listOfTime = db.getTypesToSpinner(mgs.get(1));
+                            if(mgs.get(0).equals("He")){
+                                listOfTime = db.getTypesToSpinnerHeb(mgs.get(2));
+                            }
+                            else {
+                                listOfTime = db.getTypesToSpinner(mgs.get(2));
+                            }
                             output = new PrintWriter(socket.getOutputStream(), true);
                             System.out.println("Animal is : " + listOfTime );
                             String serializedLogIn = gson.toJson(listOfTime);
@@ -90,7 +101,7 @@ public class Main {
                         try {
                             db.connect();
                             tempArray = new ArrayList<>();
-                            register = new Register(mgs.get(1),mgs.get(2),mgs.get(3),mgs.get(4));
+                            register = new Register(mgs.get(2),mgs.get(3),mgs.get(4),mgs.get(5));
                             tempArray.add(db.register(register));
                             output = new PrintWriter(socket.getOutputStream(), true);
                             System.out.println("Detail of register is : " + mgs );
@@ -106,7 +117,7 @@ public class Main {
                         try {
                             db.connect();
                             tempArray = new ArrayList<>();
-                            addAnimal = new AddAnimal(mgs.get(1),mgs.get(2),mgs.get(3),mgs.get(4),mgs.get(5),mgs.get(6),mgs.get(7));
+                            addAnimal = new AddAnimal(mgs.get(2),mgs.get(3),mgs.get(4),mgs.get(5),mgs.get(6),mgs.get(7),mgs.get(8));
                             tempArray.add(db.addAnimal(addAnimal));
                             output = new PrintWriter(socket.getOutputStream(), true);
                             System.out.println("Detail of Animal is : " + mgs );

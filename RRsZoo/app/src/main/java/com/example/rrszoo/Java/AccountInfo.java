@@ -41,6 +41,12 @@ public class AccountInfo extends AppCompatActivity {
 
     private void getAccountInfo() {
         messageToServer = new ArrayList<>();
+        if (zooLanguage.isEnglish()) {
+            messageToServer.add("En");
+        }
+        else {
+            messageToServer.add("He");
+        }
         messageToServer.add("Account");
         getInformation = new GetInformation(messageToServer, AccountInfo.this);
         getInformation.execute();

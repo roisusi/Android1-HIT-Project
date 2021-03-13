@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         register = (Button) findViewById(R.id.registerFirstPage);
         title = (ImageView) findViewById(R.id.titleBar);
         messageToServer = new ArrayList<>();
-        fragmentLogin = new  FragmentLogin();
+        fragmentLogin = new  FragmentLogin(zooLanguage.isEnglish());
 
         //Hide the Menu Bar
         getSupportActionBar().hide();
@@ -108,6 +108,12 @@ public class MainActivity extends AppCompatActivity {
         EditText pass = (EditText) findViewById(R.id.passReg);
         EditText email = (EditText) findViewById(R.id.emailReg);
 
+        if (zooLanguage.isEnglish()) {
+            messageToServer.add("En");
+        }
+        else {
+            messageToServer.add("He");
+        }
         messageToServer.add("Register");
         messageToServer.add(login.getText().toString());
         messageToServer.add(pass.getText().toString());

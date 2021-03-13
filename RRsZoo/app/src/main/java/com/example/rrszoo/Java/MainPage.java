@@ -63,8 +63,8 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         zooLanguage = new ZooLanguage(getSharedPreferences("RRsZoo", MODE_PRIVATE));
-        setContentView(zooLanguage.isEnglish() ?  R.layout.main_page : R.layout.main_page_heb);
+        zooLanguage = new ZooLanguage(getSharedPreferences("RRsZoo", MODE_PRIVATE));
+        setContentView(zooLanguage.isEnglish() ? R.layout.main_page : R.layout.main_page_heb);
         fab = findViewById(R.id.fab);
 
         imageView = (ImageView) findViewById(R.id.titleBar3);
@@ -106,28 +106,46 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         fragmentTransaction.add(R.id.animalFrag, fragmentAnimalPage).addToBackStack(null).commit();
         fragmentManager.executePendingTransactions();
 
+        if (zooLanguage.isEnglish()) {
+            switch (view.getId()) {
+                case R.id.seaAnimals:
+                    getDataBaseTypes("Sea Animals");
+                    break;
+                case R.id.arthropoda:
+                    getDataBaseTypes("Arthropoda");
+                    break;
+                case R.id.mammals:
+                    getDataBaseTypes("Mammals");
+                    break;
+                case R.id.reptiles:
+                    getDataBaseTypes("Reptiles");
+                    break;
+                case R.id.birds:
+                    getDataBaseTypes("Birds");
+                    break;
 
-
-
-        switch (view.getId()) {
-            case R.id.seaAnimals:
-                getDataBaseTypes("Sea Animals");
-                break;
-            case R.id.arthropoda:
-                getDataBaseTypes("Arthropoda");
-                break;
-            case R.id.mammals:
-                getDataBaseTypes("Mammals");
-                break;
-            case R.id.reptiles:
-                getDataBaseTypes("Reptiles");
-                break;
-            case R.id.birds:
-                getDataBaseTypes("Birds");
-                break;
-
+            }
         }
+        else {
 
+            switch (view.getId()) {
+                case R.id.seaAnimals:
+                    getDataBaseTypes("חיות מים");
+                    break;
+                case R.id.arthropoda:
+                    getDataBaseTypes("Arthropoda");
+                    break;
+                case R.id.mammals:
+                    getDataBaseTypes("Mammals");
+                    break;
+                case R.id.reptiles:
+                    getDataBaseTypes("Reptiles");
+                    break;
+                case R.id.birds:
+                    getDataBaseTypes("Birds");
+                    break;
+            }
+        }
 
     }
 
@@ -145,6 +163,11 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     }
 
     private void getDataBaseTypes(String animal) {
+        if (zooLanguage.isEnglish()) {
+            messageToServer.add("En");
+        } else {
+            messageToServer.add("He");
+        }
         messageToServer.add("Type");
         messageToServer.add(animal);
         getInformation = new GetInformation(messageToServer, this);
@@ -220,6 +243,11 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
             openLoginAlert();
         } else {
             spinnerTypes = fragmentAddAnimalal.getSpinner();
+            if (zooLanguage.isEnglish()) {
+                messageToServer.add("En");
+            } else {
+                messageToServer.add("He");
+            }
             messageToServer.add("AddAnimal");
             messageToServer.add(spinnerTypes.getSelectedItem().toString());
             messageToServer.add(name.getText().toString());
@@ -283,8 +311,18 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
             case R.id.logout:
                 intent = new Intent(getApplicationContext(), MainActivity.class);
                 logout = "Logout";
-                intent.putExtra("Logout",logout);
+                intent.putExtra("Logout", logout);
                 startActivity(intent);
+                break;
+            case R.id.Hebrew:
+                zooLanguage.setHebrew();
+                //setContentView(R.layout.main_page_heb);
+                item.setChecked(true);
+                break;
+            case R.id.English:
+                zooLanguage.setEnglish();
+                //setContentView(R.layout.main_page);
+                item.setChecked(true);
                 break;
 
             default:
@@ -294,14 +332,14 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         return true;
     }
 
-    public void openLoginAlert(){
+    public void openLoginAlert() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainPage.this);
         alertDialogBuilder.setMessage("One or More cells are empty");
         alertDialogBuilder.setPositiveButton("Ok",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        Toast.makeText(MainPage.this,"Fill all Text",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainPage.this, "Fill all Text", Toast.LENGTH_LONG).show();
                     }
                 });
 /*

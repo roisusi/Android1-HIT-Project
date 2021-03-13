@@ -3,9 +3,11 @@ package com.example.rrszoo.Java;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
 import com.google.gson.Gson;
@@ -73,6 +75,7 @@ public class GetInformation extends AsyncTask<String,Void,String>
         return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     protected void onPostExecute(String s) {
         Log.e(TAG, "onPostExecute: pre "  + okMessage);

@@ -121,6 +121,12 @@ public class AnimalPage extends AppCompatActivity {
 
     private void getFromDB(){
 
+        if (zooLanguage.isEnglish()) {
+            messageToServer.add("En");
+        }
+        else {
+            messageToServer.add("He");
+        }
         messageToServer.add("Animal");
         messageToServer.add(gettingExtraAnimal);
         mt = new GetInformation(messageToServer,this);

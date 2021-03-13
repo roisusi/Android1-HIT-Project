@@ -53,10 +53,15 @@ public class FragmentLogin extends Fragment {
     private boolean logout;
     private CheckBox checkBoxLogin;
     private String log;
-
+    Boolean isEnglish;
 
     public FragmentLogin() {
         // Required empty public constructor
+    }
+
+    public FragmentLogin(Boolean isEnglsih) {
+        // Required empty public constructor
+        this.isEnglish = isEnglsih;
     }
 
     /**
@@ -182,6 +187,14 @@ public class FragmentLogin extends Fragment {
     public void loginToServer() {
         messageToServer = new ArrayList<>();
         messageToServer.clear();
+
+        if (isEnglish) {
+            messageToServer.add("En");
+        }
+        else {
+            messageToServer.add("He");
+        }
+
         messageToServer.add("Login");
         messageToServer.add(loginText.getText().toString());
         messageToServer.add(passText.getText().toString());

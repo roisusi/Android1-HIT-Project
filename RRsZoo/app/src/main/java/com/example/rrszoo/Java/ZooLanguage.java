@@ -20,7 +20,6 @@ public class ZooLanguage {
     ZooLanguage(SharedPreferences sharedPreferences) {
         this.sharedPreferences = sharedPreferences;
         editore = sharedPreferences.edit();
-        this.setHebrew();
     }
 
     protected boolean isEnglish() {
