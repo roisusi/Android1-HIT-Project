@@ -95,4 +95,5 @@ public class FragmentAddAnimal extends Fragment {
         return spinnerTypes;
     }
 
+
 }
