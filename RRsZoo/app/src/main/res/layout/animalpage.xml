@@ -7,61 +7,43 @@
     android:background="@drawable/background"
     tools:context=".Java.AnimalPage">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Hello XXXX"
-        android:textColor="@color/black"
-        android:textSize="30sp"
+    <ImageView
+        android:id="@+id/animalImageView"
+        android:layout_width="189dp"
+        android:layout_height="191dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/titleAnimalPage" />
 
     <TextView
-        android:id="@+id/lifeTime"
+        android:id="@+id/food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Life Time : "
+        android:layout_marginTop="24dp"
+        android:maxEms="10"
+        android:text="Food : "
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/location"
-        app:layout_constraintTop_toBottomOf="@+id/location" />
+        app:layout_constraintStart_toStartOf="@+id/lifeTime"
+        app:layout_constraintTop_toBottomOf="@+id/lifeTime" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="16dp"
         android:text="Name : "
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/animalImageView"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/numOfChilds"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Number of Childrens : "
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/food"
-        app:layout_constraintTop_toBottomOf="@+id/food" />
+        app:layout_constraintTop_toTopOf="@+id/animalImageView" />
 
     <TextView
         android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:maxEms="10"
         android:singleLine="false"
         android:text="Location : "
@@ -71,32 +53,33 @@
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <TextView
-        android:id="@+id/food"
+        android:id="@+id/numOfChilds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:maxEms="10"
-        android:text="Food : "
+        android:layout_marginTop="24dp"
+        android:text="Number of Childrens : "
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/lifeTime"
-        app:layout_constraintTop_toBottomOf="@+id/lifeTime" />
+        app:layout_constraintStart_toStartOf="@+id/food"
+        app:layout_constraintTop_toBottomOf="@+id/food" />
 
-    <ImageView
-        android:id="@+id/animalImageView"
-        android:layout_width="176dp"
-        android:layout_height="165dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+    <TextView
+        android:id="@+id/lifeTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Life Time : "
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/location"
+        app:layout_constraintTop_toBottomOf="@+id/location" />
 
     <Button
         android:id="@+id/backAnimal"
         android:layout_width="153dp"
         android:layout_height="42dp"
-        android:layout_marginStart="112dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/buttonshape"
         android:text="Back"
         android:textAllCaps="true"
@@ -106,21 +89,18 @@
 
     <Button
         android:id="@+id/fbshare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Share on Faceook"
+        android:layout_width="69dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/facebook_icon_png"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/backAnimal"
-        app:layout_constraintTop_toBottomOf="@+id/backAnimal"
-        app:layout_constraintVertical_bias="0.946" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <RelativeLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="48dp"
         android:layout_marginBottom="32dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/fbshare"
@@ -140,10 +120,23 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:gravity="start|top"
+                android:hint="Share on Fabebook"
                 android:inputType="textMultiLine" />
         </ScrollView>
 
 
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/titleAnimalPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Animal Info Page"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
