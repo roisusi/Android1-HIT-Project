@@ -50,7 +50,7 @@
         tools:ignore="OnClick" />
 
     <Button
-        android:id="@+id/backFrag"
+        android:id="@+id/backFragLogin"
         android:layout_width="186dp"
         android:layout_height="57dp"
         android:layout_marginTop="120dp"

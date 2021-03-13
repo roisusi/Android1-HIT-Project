@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.rrszoo.Fragments.FragmentLogin;
 import com.example.rrszoo.Fragments.FragmentRegister;
@@ -28,10 +27,11 @@ public class MainActivity extends AppCompatActivity {
     private Button login;
     private Button register;
     private ImageView title;
-    private List<String> message;
-    private List<String> loginMessage;
-    private String okMessage="";
-    private myTask mt;
+    private List<String> messageToServer;
+    private List<String> stringFromServer;
+    private GetInformation getInformation;
+    private SendInformation sendInformation;
+
     private Intent intent;
 
 
@@ -42,13 +42,14 @@ public class MainActivity extends AppCompatActivity {
         login = (Button) findViewById(R.id.login);
         register = (Button) findViewById(R.id.register);
         title = (ImageView) findViewById(R.id.titleBar);
-        message = new ArrayList<>();
-        loginMessage = new ArrayList<>();
+        messageToServer = new ArrayList<>();
 
+        //Hide the Menu Bar
+        getSupportActionBar().hide();
 
     }
 
-    public void registerUser(View view){
+    public void registerUser(View view) {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentReg, new FragmentRegister()).addToBackStack(null).commit();
@@ -82,43 +83,43 @@ public class MainActivity extends AppCompatActivity {
             title.setVisibility(View.VISIBLE);
         }
     }
-    public void loginToServer(View view){
 
-//        Intent intent = new Intent(MainActivity.this, AnimalPage.class);
-//        startActivity(intent);
-
-        message.add("Login");
+    public void loginToServer(View view) {
+        messageToServer.clear();
+        messageToServer.add("Login");
         EditText login = (EditText) findViewById(R.id.loginText);
-        message.add(login.getText().toString());
+        messageToServer.add(login.getText().toString());
         EditText pass = (EditText) findViewById(R.id.passText);
-        message.add(pass.getText().toString());
-        mt = new myTask(message,okMessage,MainActivity.this);
-        mt.execute(okMessage);
+        messageToServer.add(pass.getText().toString());
+        getInformation = new GetInformation(messageToServer, MainActivity.this);
+        getInformation.execute();
+    }
 
+    public void register(View view) {
+        messageToServer.clear();
+        EditText login = (EditText) findViewById(R.id.loginReg);
+        EditText pass = (EditText) findViewById(R.id.passReg);
+        EditText email = (EditText) findViewById(R.id.emailReg);
+
+        messageToServer.add("Register");
+        messageToServer.add(login.getText().toString());
+        messageToServer.add(pass.getText().toString());
+        messageToServer.add("false");
+        messageToServer.add(email.getText().toString());
+        sendInformation = new SendInformation(messageToServer, MainActivity.this,view);
+        sendInformation.execute();
 
     }
 
-    public void onClick(View view) {
-        //mt = new myTask(message,okMessage);
-        //mt.execute();
-        Toast.makeText(getApplicationContext(),"Data sent",Toast.LENGTH_LONG);
-    }
+    public void postLogin(List<String> s) {
+        stringFromServer = s;
+        Log.e(TAG, "test: " + stringFromServer);
 
-    public void register(View view){
-        //DataBase
-    }
-
-    public String postLogin(List<String> s){
-        loginMessage = s;
-        Log.e(TAG, "test: " + loginMessage );
-
-        //Login login = new Login(okMessage);
-        if(loginMessage != null) {
+        if (stringFromServer != null) {
             intent = new Intent(getApplicationContext(), MainPage.class);
-            intent.putExtra("Admin",loginMessage.get(2));
+            intent.putExtra("Admin", stringFromServer.get(2));
             startActivity(intent);
         }
-        return okMessage;
     }
 
 }

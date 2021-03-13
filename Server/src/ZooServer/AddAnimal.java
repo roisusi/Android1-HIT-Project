@@ -1,22 +1,31 @@
-package com.example.rrszoo.Java;
+package ZooServer;
 
-import android.media.Image;
+public class AddAnimal {
 
-public class Animal {
+    private String type;
     private String name;
     private String location;
     private String lifetime;
     private String food;
     private String numberOfChildrens;
-    private Image image;
+    private String image;
 
-    public Animal(String name, String location, String lifetime, String food, String numberOfChildrens,Image image) {
+    public AddAnimal(String type , String name, String location, String lifetime, String food, String numberOfChildrens,String image) {
+        this.type = type;
         this.name = name;
         this.location = location;
         this.lifetime = lifetime;
         this.food = food;
         this.numberOfChildrens = numberOfChildrens;
         this.image = image;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getName() {
@@ -59,11 +68,12 @@ public class Animal {
         this.numberOfChildrens = numberOfChildrens;
     }
 
-    public Image getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Image image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }
+
