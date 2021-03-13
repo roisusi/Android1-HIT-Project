@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -44,13 +45,14 @@ public class FragmentLogin extends Fragment {
 
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
-    private static boolean logFlag = true;
     private EditText loginText;
     private EditText passText;
     private List<String> stringFromServer;
     private List<String> messageToServer;
     private GetInformation getInformation;
-    private boolean logout = false;
+    private boolean logout;
+    private CheckBox checkBoxLogin;
+    private String log;
 
 
     public FragmentLogin() {
@@ -97,6 +99,7 @@ public class FragmentLogin extends Fragment {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         loginText = (EditText) v.findViewById(R.id.loginText);
         passText = (EditText) v.findViewById(R.id.passText);
+        checkBoxLogin = (CheckBox) v.findViewById(R.id.rememberCB);
 
         //return inflater.inflate(R.layout.fragment_login, container, false);
         return v;
@@ -105,7 +108,9 @@ public class FragmentLogin extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void loginFromServer(List<String> s) {
         stringFromServer = s;
-        setLoginDetails(stringFromServer.get(0), stringFromServer.get(1));
+        if (checkBoxLogin.isChecked())
+            log = "Login";
+        setLoginDetails(stringFromServer.get(0), stringFromServer.get(1), log);
     }
 
 
@@ -114,37 +119,45 @@ public class FragmentLogin extends Fragment {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        if (logFlag)
+
+        log = this.pref.getString("checked", null);
+        if (log != null) {
             this.tryLogIn();
-        else {
+        } else {
             //clear cache so it not remember you
             editor.putString("login", null);
             editor.putString("password", null);
+            editor.putString("checked", null);
             editor.apply();
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     private void tryLogIn() {
         final String login = this.pref.getString("login", null);
         final String password = this.pref.getString("password", null);
+        log = this.pref.getString("checked", null);
         if (login != null && password != null) {
             loginText.setText(login);
             passText.setText(password);
             logout = true;
-            loginToServer();
+            setLoginDetails(login,password,log);
         }
+        if (logout)
+            loginToServer();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
-    private void setLoginDetails(String login, String password) {
+    private void setLoginDetails(String login, String password, String log) {
         editor.putString("login", login);
         editor.putString("password", password);
+        editor.putString("checked", log);
         editor.apply();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void cleanLoginDetails() { // call this when logout
-        setLoginDetails(null, null);
+        setLoginDetails(null, null, null);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
@@ -152,8 +165,9 @@ public class FragmentLogin extends Fragment {
         if (s != null && s.equals("Logout")) {
             cleanLoginDetails();
             logout = false;
-        } else {
+        } else if (checkBoxLogin.isChecked()){
             logout = true;
+            setLoginDetails(loginText.getText().toString(),passText.getText().toString(),"Login");
         }
         return logout;
     }

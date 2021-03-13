@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         //Hide the Menu Bar
         getSupportActionBar().hide();
 
-
         logout = getIntent().getStringExtra("Logout");
 //        if (logout == null){
 //            logout="Logout";
@@ -125,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
         stringFromServer = s;
         Log.e(TAG, "test: " + stringFromServer);
 
-        fragmentLogin.loginFromServer(stringFromServer);
         if (fragmentLogin.rememberLogin(logout)){
             intent = new Intent(getApplicationContext(), MainPage.class);
             intent.putExtra("Admin", stringFromServer.get(2));
