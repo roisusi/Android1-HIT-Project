@@ -159,6 +159,8 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         birds.setVisibility(View.VISIBLE);
         artth.setVisibility(View.VISIBLE);
         showFab();
+        getSupportActionBar().show();
+
 
     }
 

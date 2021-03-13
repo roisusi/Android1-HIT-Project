@@ -90,12 +90,12 @@ public class AccountInfo extends AppCompatActivity {
         switch (id) {
             case R.id.Hebrew:
                 zooLanguage.setHebrew();
-                setContentView(R.layout.activity_account_info_heb);
+                //setContentView(R.layout.activity_account_info_heb);
                 item.setChecked(true);
                 break;
             case R.id.English:
                 zooLanguage.setEnglish();
-                setContentView(R.layout.activity_account_info);
+                //setContentView(R.layout.activity_account_info);
                 item.setChecked(true);
                 break;
             default:
