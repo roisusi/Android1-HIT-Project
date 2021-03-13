@@ -120,6 +120,8 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         reptalis.setVisibility(View.VISIBLE);
         birds.setVisibility(View.VISIBLE);
         artth.setVisibility(View.VISIBLE);
+        showFab();
+
     }
 
     private void getDataBaseTypes(String animal) {
@@ -148,6 +150,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         reptalis.setVisibility(View.INVISIBLE);
         birds.setVisibility(View.INVISIBLE);
         artth.setVisibility(View.INVISIBLE);
+        fab.setVisibility(View.INVISIBLE);
 
 
         Button back = (Button) findViewById(R.id.backToMainPage);
@@ -160,6 +163,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
                 reptalis.setVisibility(View.VISIBLE);
                 birds.setVisibility(View.VISIBLE);
                 artth.setVisibility(View.VISIBLE);
+                showFab();
             }
         });
 
@@ -234,6 +238,11 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    private void showFab(){
+        if (gettingExtra.equals("true"))
+            fab.setVisibility(View.VISIBLE);
     }
 
 
