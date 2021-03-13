@@ -35,21 +35,27 @@ public class MainActivity extends AppCompatActivity {
     private SendInformation sendInformation;
     private FragmentLogin fragmentLogin;
     private Intent intent;
+    private String logout;
     private ZooLanguage zooLanguage;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         zooLanguage = new ZooLanguage(getSharedPreferences("RRsZoo", MODE_PRIVATE));
         setContentView(R.layout.activity_main);
+
         login = (Button) findViewById(R.id.loginFirstPage);
         register = (Button) findViewById(R.id.registerFirstPage);
         title = (ImageView) findViewById(R.id.titleBar);
         messageToServer = new ArrayList<>();
+        fragmentLogin = new  FragmentLogin();
 
         //Hide the Menu Bar
         getSupportActionBar().hide();
+
+        logout = getIntent().getStringExtra("Logout");
 
 
     }
@@ -66,20 +72,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void loginFrag(View view) {
-        fragmentLogin = new  FragmentLogin();
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentLog, fragmentLogin).addToBackStack(null).commit();
-
-        if (fragmentLogin.rememberLogin()){
-//            loginToServer(view);
-//            intent = new Intent(getApplicationContext(), MainPage.class);
-//            intent.putExtra("Admin", stringFromServer.get(2));
-//            startActivity(intent);
-        }
-        else{
-
-        }
 
         login.setVisibility(View.INVISIBLE);
         register.setVisibility(View.INVISIBLE);
@@ -100,16 +95,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void loginToServer(View view) {
-
-        messageToServer.clear();
-        messageToServer.add("Login");
-        EditText login = (EditText) findViewById(R.id.loginText);
-        messageToServer.add(login.getText().toString());
-        EditText pass = (EditText) findViewById(R.id.passText);
-        messageToServer.add(pass.getText().toString());
-        getInformation = new GetInformation(messageToServer, MainActivity.this);
-        getInformation.execute();
+        logout=null;
+        fragmentLogin.rememberLogin(logout);
+        fragmentLogin.loginToServer();
     }
 
     public void register(View view) {
@@ -133,12 +123,12 @@ public class MainActivity extends AppCompatActivity {
         stringFromServer = s;
         Log.e(TAG, "test: " + stringFromServer);
 
-        fragmentLogin.loginFromServer(stringFromServer);
-        if (stringFromServer != null) {
+        if (fragmentLogin.rememberLogin(logout)){
             intent = new Intent(getApplicationContext(), MainPage.class);
             intent.putExtra("Admin", stringFromServer.get(2));
             startActivity(intent);
         }
+
     }
 
 }
