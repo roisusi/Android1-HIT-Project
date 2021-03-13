@@ -75,10 +75,71 @@ public class DataBase {
         return new Animal(type, name, location, lifetime, food, numberOfChildrens, imageURI);
     }
 
+    public Animal animalPageHeb(String animal) throws SQLException {
+
+        String selectSql = "select * from Animals_Heb where Name =" + "\"" + animal + "\"";
+        Statement selectStatment = con.createStatement();
+        selectStatment.getResultSet();
+        ResultSet results = null;
+        try {
+            results = selectStatment.executeQuery(selectSql);
+        } catch (SQLException e) {
+            return null;
+
+        }
+
+        String type = "";
+        String name = "";
+        String location = "";
+        String lifetime = "";
+        String food = "";
+        String numberOfChildrens = "";
+        String imageURI = "";
+
+        while (results.next()) {
+            type = results.getString("Type");
+            name = results.getString("Name");
+            location = results.getString("Location");
+            lifetime = results.getString("LifeTime");
+            food = results.getString("Food");
+            numberOfChildrens = results.getString("NumOfChildrens");
+            imageURI = results.getString("ImageURI");
+
+        }
+        selectStatment.close();
+
+
+        return new Animal(type, name, location, lifetime, food, numberOfChildrens, imageURI);
+    }
+
 
     public ArrayList<String> getTypesToSpinner(String Type) throws SQLException {
 
         String selectSql = "select * from Animals where Type =" + "\"" + Type + "\"";
+        Statement selectStatment = con.createStatement();
+        selectStatment.getResultSet();
+        ResultSet results = null;
+        try {
+            results = selectStatment.executeQuery(selectSql);
+        } catch (SQLException e) {
+            return null;
+
+        }
+
+        ArrayList animalTypes = new ArrayList();
+
+        while (results.next()) {
+            animalTypes.add(results.getString("Name"));
+        }
+        selectStatment.close();
+
+        return animalTypes;
+
+    }
+
+    public ArrayList<String> getTypesToSpinnerHeb(String Type) throws SQLException {
+
+        String selectSql = "select * from Animals_Heb where Type =" + "\"" + Type + "\"";
         Statement selectStatment = con.createStatement();
         selectStatment.getResultSet();
         ResultSet results = null;

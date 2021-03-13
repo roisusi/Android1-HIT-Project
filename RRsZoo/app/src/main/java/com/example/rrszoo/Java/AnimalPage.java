@@ -38,6 +38,7 @@ public class AnimalPage extends AppCompatActivity {
     ShareDialog shareDialog;
     String shareText = "";
     String imageUri = "";
+    ZooLanguage zooLanguage;
 
 
     private static final String TAG = "AnimalPage" ;
@@ -90,9 +91,10 @@ public class AnimalPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        zooLanguage = new ZooLanguage(getSharedPreferences("RRsZoo", MODE_PRIVATE));
 
 
-        setContentView(R.layout.animalpage);
+        setContentView(zooLanguage.isEnglish() ? R.layout.animalpage : R.layout.animalpage_heb);
         messageToServer = new ArrayList<>();
 
         gettingExtraAnimal = getIntent().getStringExtra("Animal");
@@ -119,6 +121,12 @@ public class AnimalPage extends AppCompatActivity {
 
     private void getFromDB(){
 
+        if (zooLanguage.isEnglish()) {
+            messageToServer.add("En");
+        }
+        else {
+            messageToServer.add("He");
+        }
         messageToServer.add("Animal");
         messageToServer.add(gettingExtraAnimal);
         mt = new GetInformation(messageToServer,this);

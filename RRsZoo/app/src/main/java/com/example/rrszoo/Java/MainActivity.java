@@ -36,19 +36,21 @@ public class MainActivity extends AppCompatActivity {
     private FragmentLogin fragmentLogin;
     private Intent intent;
     private String logout;
+    private ZooLanguage zooLanguage;
 
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        zooLanguage = new ZooLanguage(getSharedPreferences("RRsZoo", MODE_PRIVATE));
         setContentView(R.layout.activity_main);
 
         login = (Button) findViewById(R.id.loginFirstPage);
         register = (Button) findViewById(R.id.registerFirstPage);
         title = (ImageView) findViewById(R.id.titleBar);
         messageToServer = new ArrayList<>();
-        fragmentLogin = new  FragmentLogin();
+        fragmentLogin = new  FragmentLogin(zooLanguage.isEnglish());
 
         //Hide the Menu Bar
         getSupportActionBar().hide();
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     public void registerUser(View view) {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragmentReg, new FragmentRegister()).addToBackStack(null).commit();
+        fragmentTransaction.add(R.id.fragmentReg, new FragmentRegister(zooLanguage.isEnglish())).addToBackStack(null).commit();
 
         login.setVisibility(View.INVISIBLE);
         register.setVisibility(View.INVISIBLE);
@@ -106,6 +108,12 @@ public class MainActivity extends AppCompatActivity {
         EditText pass = (EditText) findViewById(R.id.passReg);
         EditText email = (EditText) findViewById(R.id.emailReg);
 
+        if (zooLanguage.isEnglish()) {
+            messageToServer.add("En");
+        }
+        else {
+            messageToServer.add("He");
+        }
         messageToServer.add("Register");
         messageToServer.add(login.getText().toString());
         messageToServer.add(pass.getText().toString());
