@@ -63,6 +63,8 @@ public class FragmentAddAnimal extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        //Hide the Menu Bar
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
 
@@ -71,10 +73,7 @@ public class FragmentAddAnimal extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-
         View v = inflater.inflate(R.layout.fragment_add_animal, container, false);
-
-        //Hide the Menu Bar
 
         spinnerTypes = v.findViewById(R.id.spinnerType);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),R.array.Type , android.R.layout.simple_spinner_item);

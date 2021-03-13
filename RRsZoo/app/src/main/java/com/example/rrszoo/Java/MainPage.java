@@ -267,6 +267,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         Intent intent;
+        String logout;
         switch (id) {
             case R.id.account:
                 intent = new Intent(getApplicationContext(), AccountInfo.class);
@@ -274,6 +275,8 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
                 break;
             case R.id.logout:
                 intent = new Intent(getApplicationContext(), MainActivity.class);
+                logout = "Logout";
+                intent.putExtra("Logout",logout);
                 startActivity(intent);
                 break;
 
