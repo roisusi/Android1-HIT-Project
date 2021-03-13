@@ -91,8 +91,7 @@ public class AnimalPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        setContentView(R.layout.animalpage);
+         setContentView(R.layout.animalpage);
         messageToServer = new ArrayList<>();
 
         gettingExtraAnimal = getIntent().getStringExtra("Animal");

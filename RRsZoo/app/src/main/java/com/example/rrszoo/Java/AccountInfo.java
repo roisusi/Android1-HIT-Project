@@ -1,7 +1,5 @@
 package com.example.rrszoo.Java;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +11,7 @@ import com.example.rrszoo.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountInfo extends AppCompatActivity {
+public class AccountInfo extends SimpleZooActivity {
 
     private GetInformation getInformation;
     private SendInformation sendInformation;
@@ -23,7 +21,8 @@ public class AccountInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_info);
+
+        setContentView(this.isEnglish ?  R.layout.activity_account_info : R.layout.activity_account_info_heb);
         getAccountInfo();
 
         Button back = (Button) findViewById(R.id.backAcc);
@@ -36,6 +35,14 @@ public class AccountInfo extends AppCompatActivity {
             }
         });
     }
+
+    /*private void setLanguage() {
+        this.setTextViewText(R.id.titleAcc, "Account Information", "פרטי משתמש");
+        this.setTextViewText(R.id.NameAcc, "Name:", "שם:");
+        this.setTextViewText(R.id.emailAcc, "Email:", "אימייל:");
+        this.setTextViewText(R.id.adminAcc, "Admin:", "מנהל:");
+        this.changeLanguage();
+    }*/
 
     private void getAccountInfo() {
         messageToServer = new ArrayList<>();
