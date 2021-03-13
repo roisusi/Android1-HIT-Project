@@ -121,7 +121,7 @@ public class FragmentLogin extends Fragment {
         // Check if user is signed in (non-null) and update UI accordingly.
 
         log = this.pref.getString("checked", null);
-        if (log != null) {
+        if (log != null && !log.equals("Logout")) {
             this.tryLogIn();
         } else {
             //clear cache so it not remember you
@@ -140,8 +140,11 @@ public class FragmentLogin extends Fragment {
         if (login != null && password != null) {
             loginText.setText(login);
             passText.setText(password);
-            logout = true;
             setLoginDetails(login,password,log);
+            if (log.equals("Login")) {
+                logout = true;
+                checkBoxLogin.setChecked(true);
+            }
         }
         if (logout)
             loginToServer();
@@ -168,6 +171,10 @@ public class FragmentLogin extends Fragment {
         } else if (checkBoxLogin.isChecked()){
             logout = true;
             setLoginDetails(loginText.getText().toString(),passText.getText().toString(),"Login");
+        }
+        else{
+            logout = true;
+            setLoginDetails(loginText.getText().toString(),passText.getText().toString(),"Logout");
         }
         return logout;
     }
