@@ -1,5 +1,6 @@
 package com.example.rrszoo.Java;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -8,6 +9,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -19,7 +23,6 @@ import android.widget.Spinner;
 
 import com.example.rrszoo.Fragments.FragmentAddAnimal;
 import com.example.rrszoo.Fragments.FragmentAnimals;
-import com.example.rrszoo.Fragments.FragmentRegister;
 import com.example.rrszoo.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -47,6 +50,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     private GetInformation getInformation;
     private SendInformation sendInformation;
     private FloatingActionButton fab;
+
 
 
     @Override
@@ -139,7 +143,6 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     private void openSpinner(List<String> types) {
 
         spinnerAnimals = findViewById(R.id.spinner);
-        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,rArray , android.R.layout.simple_spinner_item);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, types);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinnerAnimals.setAdapter(adapter);
@@ -196,11 +199,9 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         EditText childrens = (EditText) findViewById(R.id.addChildrens);
         EditText img = (EditText) findViewById(R.id.addImageLink);
 
-
         messageToServer.clear();
 
         spinnerTypes = fragmentAddAnimalal.getSpinner();
-
         messageToServer.add("AddAnimal");
         messageToServer.add(spinnerTypes.getSelectedItem().toString());
         messageToServer.add(name.getText().toString());
@@ -217,8 +218,6 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//        String text = parent.getItemAtPosition(position).toString();
-//        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
         String animal = parent.getItemAtPosition(position).toString();
 
         Button select = (Button) findViewById(R.id.selectAnimal);
@@ -245,5 +244,30 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
             fab.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch(id) {
+            case R.id.account:
+
+                break;
+            case R.id.logout:
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item); //react to many chooses
+
+        }
+        return true;
+    }
 
 }

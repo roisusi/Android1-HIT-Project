@@ -43,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
         register = (Button) findViewById(R.id.register);
         title = (ImageView) findViewById(R.id.titleBar);
         messageToServer = new ArrayList<>();
-        //stringToServer = new ArrayList<>();
 
+
+        getSupportActionBar().hide();
 
     }
 
