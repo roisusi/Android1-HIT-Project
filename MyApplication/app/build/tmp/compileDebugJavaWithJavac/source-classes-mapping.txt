@@ -1,0 +1,7 @@
+devdeeds/com/changelanguage/LocaleHelper.java
+ devdeeds.com.changelanguage.LocaleHelper
+devdeeds/com/changelanguage/BuildConfig.java
+ devdeeds.com.changelanguage.BuildConfig
+devdeeds/com/changelanguage/MainActivity.java
+ devdeeds.com.changelanguage.MainActivity
+ devdeeds.com.changelanguage.MainActivity$1
