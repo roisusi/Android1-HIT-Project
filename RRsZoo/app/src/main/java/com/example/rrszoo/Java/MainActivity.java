@@ -50,17 +50,10 @@ public class MainActivity extends AppCompatActivity {
         messageToServer = new ArrayList<>();
         fragmentLogin = new  FragmentLogin();
 
-
         //Hide the Menu Bar
         getSupportActionBar().hide();
 
-
         logout = getIntent().getStringExtra("Logout");
-//        if (logout == null){
-//            logout="Logout";
-//            fragmentLogin.rememberLogin(logout);
-//        }
-
 
 
     }
@@ -100,7 +93,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void loginToServer(View view) {
+        logout=null;
+        fragmentLogin.rememberLogin(logout);
         fragmentLogin.loginToServer();
     }
 
@@ -125,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
         stringFromServer = s;
         Log.e(TAG, "test: " + stringFromServer);
 
-        fragmentLogin.loginFromServer(stringFromServer);
         if (fragmentLogin.rememberLogin(logout)){
             intent = new Intent(getApplicationContext(), MainPage.class);
             intent.putExtra("Admin", stringFromServer.get(2));

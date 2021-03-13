@@ -18,6 +18,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
@@ -67,6 +68,7 @@ public class AnimalPage extends AppCompatActivity {
             } else {
                 ShareLinkContent linkContent = new ShareLinkContent.Builder()
                         .setQuote(shareText)
+                        .setShareHashtag(new ShareHashtag.Builder().setHashtag("#RRsZoo").build())
                         .setContentUrl(Uri.parse(imageUri)).
                                 build();
                 shareDialog.show(linkContent);
@@ -147,14 +149,12 @@ public class AnimalPage extends AppCompatActivity {
         ImageView ivBasicImage = (ImageView) findViewById(R.id.animalImageView);
         Picasso.with(this).load(imageUri).into(ivBasicImage);
 
-        shareText = "Look at this " + animalMessage.get(1) + " , it's beautiful. it can be found in "
-                + animalMessage.get(2) + " and its live up to " + animalMessage.get(3) + ". Its favorite food is "
-                + animalMessage.get(4) + " ,  and it has " + animalMessage.get(5) + "." ;
 
         shareAnimal();
     }
 
     public void shareAnimal() {
+
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         btnShareLink = (Button)findViewById(R.id.fbshare);
 
@@ -181,6 +181,8 @@ public class AnimalPage extends AppCompatActivity {
 
         btnShareLink.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
+                TextView facebookText = (TextView) findViewById(R.id.facebookText);
+                shareText = facebookText.getText().toString();
                 Picasso.with(getBaseContext()).load("https://cdn1-www.superherohype.com/assets/uploads/2013/11/batmane3-1.jpg").into(imageContentTarget);
             }
         });
