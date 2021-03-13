@@ -8,16 +8,4 @@
     <item
         android:id="@+id/logout"
         android:title="Logout" />
-    <group
-        android:id="@+id/mnugrpLimit"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/Hebrew"
-            android:checked="true"
-            android:title="Hebrew" />
-        <item
-            android:id="@+id/English"
-            android:checked="false"
-            android:title="English" />
-    </group>
 </menu>

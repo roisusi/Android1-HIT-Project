@@ -2,10 +2,14 @@ package com.example.rrszoo.Java;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rrszoo.R;
@@ -20,6 +24,8 @@ public class AccountInfo extends AppCompatActivity {
     private List<String> messageToServer;
     private List<String> stringFromServer;
     ZooLanguage zooLanguage;
+    private Menu menu;
+    private MenuInflater inflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +74,35 @@ public class AccountInfo extends AppCompatActivity {
         else
             admin.setText("No");
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        inflater = getMenuInflater();
+        this.menu = menu;
+        inflater.inflate(R.menu.change_language, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.Hebrew:
+                zooLanguage.setHebrew();
+                setContentView(R.layout.activity_account_info_heb);
+                item.setChecked(true);
+                break;
+            case R.id.English:
+                zooLanguage.setEnglish();
+                setContentView(R.layout.activity_account_info);
+                item.setChecked(true);
+                break;
+            default:
+                return super.onOptionsItemSelected(item); //react to many chooses
+
+        }
+        return true;
     }
 
 
