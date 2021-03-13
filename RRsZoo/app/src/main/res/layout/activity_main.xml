@@ -13,7 +13,7 @@
         android:layout_width="300dp"
         android:layout_height="190dp"
         android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/login"
+        app:layout_constraintBottom_toTopOf="@+id/loginFirstPage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/title" />
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/loginFirstPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
@@ -29,12 +29,12 @@
         android:inputType="textCapSentences"
         android:onClick="loginFrag"
         android:text="Login"
-        app:layout_constraintBottom_toTopOf="@+id/register"
+        app:layout_constraintBottom_toTopOf="@+id/registerFirstPage"
         app:layout_constraintEnd_toEndOf="@+id/titleBar"
         app:layout_constraintStart_toStartOf="@+id/titleBar" />
 
     <Button
-        android:id="@+id/register"
+        android:id="@+id/registerFirstPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
@@ -43,7 +43,7 @@
         android:onClick="registerUser"
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/login" />
+        app:layout_constraintStart_toStartOf="@+id/loginFirstPage" />
 
     <FrameLayout
         android:id="@+id/fragmentLog"

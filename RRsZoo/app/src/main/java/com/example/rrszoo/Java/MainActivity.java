@@ -23,7 +23,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     static final String TAG = "MainActivity";
     private FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
+    private FragmentTransaction fragmentTransaction;
     private Button login;
     private Button register;
     private ImageView title;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private List<String> stringFromServer;
     private GetInformation getInformation;
     private SendInformation sendInformation;
-
+    private FragmentLogin fragmentLogin;
     private Intent intent;
 
 
@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        login = (Button) findViewById(R.id.login);
-        register = (Button) findViewById(R.id.register);
+        login = (Button) findViewById(R.id.loginFirstPage);
+        register = (Button) findViewById(R.id.registerFirstPage);
         title = (ImageView) findViewById(R.id.titleBar);
         messageToServer = new ArrayList<>();
 
@@ -63,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
     public void loginFrag(View view) {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragmentLog, new FragmentLogin()).addToBackStack(null).commit();
+        fragmentLogin = new  FragmentLogin();
+        fragmentTransaction.add(R.id.fragmentLog, fragmentLogin).addToBackStack(null).commit();
 
         login.setVisibility(View.INVISIBLE);
         register.setVisibility(View.INVISIBLE);
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loginToServer(View view) {
+
         messageToServer.clear();
         messageToServer.add("Login");
         EditText login = (EditText) findViewById(R.id.loginText);
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         stringFromServer = s;
         Log.e(TAG, "test: " + stringFromServer);
 
+        fragmentLogin.loginFromServer(stringFromServer);
         if (stringFromServer != null) {
             intent = new Intent(getApplicationContext(), MainPage.class);
             intent.putExtra("Admin", stringFromServer.get(2));
