@@ -86,7 +86,6 @@ class GetInformation extends AsyncTask<String,Void,String>
             }
 
         if (activity instanceof AnimalPage && backFromServer.isEmpty()) {
-            openLoginAlert();
         }
         else if (activity instanceof AnimalPage) {
 
@@ -95,12 +94,19 @@ class GetInformation extends AsyncTask<String,Void,String>
         }
 
         if (activity instanceof MainPage && backFromServer.isEmpty()) {
-            openLoginAlert();
         }
         else if (activity instanceof MainPage) {
 
             MainPage activity = (MainPage) this.activity;
             activity.fillArrayToSpinner(backFromServer);
+        }
+
+        if (activity instanceof AccountInfo && backFromServer.isEmpty()) {
+        }
+        else if (activity instanceof AccountInfo) {
+
+            AccountInfo activity = (AccountInfo) this.activity;
+            activity.setInfo(backFromServer);
         }
 
         super.onPostExecute(s);

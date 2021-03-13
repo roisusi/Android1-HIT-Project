@@ -118,8 +118,18 @@ public class Main {
                             e.printStackTrace();
                         }
                         break;
-
-
+                    case "Account":
+                        try {
+                            System.out.println("Account User is : " + login.getLogin() + " and Password is : " + login.getPas()
+                                    + " and email is : " + login.getEmail());
+                            output = new PrintWriter(socket.getOutputStream(), true);
+                            String serializedLogIn = gson.toJson(login.send());
+                            output.println(serializedLogIn);
+                            output.flush();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
                 }
 
 

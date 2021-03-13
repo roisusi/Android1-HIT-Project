@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         title = (ImageView) findViewById(R.id.titleBar);
         messageToServer = new ArrayList<>();
 
-
+        //Hide the Menu Bar
         getSupportActionBar().hide();
 
     }
@@ -131,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
         stringFromServer = s;
         Log.e(TAG, "test: " + stringFromServer);
 
-        //Login login = new Login(okMessage);
         if (stringFromServer != null) {
             intent = new Intent(getApplicationContext(), MainPage.class);
             intent.putExtra("Admin", stringFromServer.get(2));
