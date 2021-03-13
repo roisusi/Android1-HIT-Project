@@ -52,7 +52,6 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     private FloatingActionButton fab;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,7 +154,6 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         artth.setVisibility(View.INVISIBLE);
         fab.setVisibility(View.INVISIBLE);
 
-
         Button back = (Button) findViewById(R.id.backToMainPage);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,7 +183,6 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         reptalis.setVisibility(View.INVISIBLE);
         birds.setVisibility(View.INVISIBLE);
         artth.setVisibility(View.INVISIBLE);
-
 
     }
 
@@ -239,7 +236,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 
     }
 
-    private void showFab(){
+    private void showFab() {
         if (gettingExtra.equals("true"))
             fab.setVisibility(View.VISIBLE);
     }
@@ -254,12 +251,14 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        switch(id) {
+        Intent intent;
+        switch (id) {
             case R.id.account:
-
+                intent= new Intent(getApplicationContext(), AccountInfo.class);
+                startActivity(intent);
                 break;
             case R.id.logout:
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
                 break;
 
