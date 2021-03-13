@@ -6,7 +6,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/Hebrew"
-            android:checked="true"
+            android:checked="false"
             android:title="Hebrew" />
         <item
             android:id="@+id/English"
