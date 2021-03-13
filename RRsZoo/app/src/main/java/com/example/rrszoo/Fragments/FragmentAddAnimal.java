@@ -2,14 +2,19 @@ package com.example.rrszoo.Fragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.example.rrszoo.Java.MainPage;
 import com.example.rrszoo.R;
 
 /**
@@ -58,13 +63,18 @@ public class FragmentAddAnimal extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
         View v = inflater.inflate(R.layout.fragment_add_animal, container, false);
+
+        //Hide the Menu Bar
 
         spinnerTypes = v.findViewById(R.id.spinnerType);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),R.array.Type , android.R.layout.simple_spinner_item);
@@ -79,4 +89,5 @@ public class FragmentAddAnimal extends Fragment {
     public Spinner getSpinner(){
         return spinnerTypes;
     }
+
 }

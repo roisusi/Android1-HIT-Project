@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 
@@ -81,6 +82,9 @@ public class SendInformation extends AsyncTask<String,Void,String> {
     @Override
     protected void onPostExecute(String s) {
         Log.e(TAG, "onPostExecute: pre "  + okMessage);
+
+        Class a;
+
         if (activity instanceof MainActivity && backFromServer.isEmpty()) {
             openLoginAlert();
         }
@@ -98,13 +102,20 @@ public class SendInformation extends AsyncTask<String,Void,String> {
         if (activity instanceof MainPage && backFromServer.isEmpty()) {
             openLoginAlert();
         }
-        else if (activity instanceof MainPage) {
+        else if (activity instanceof MainPage && backFromServer.get(0).equals("OK")){
 
             MainPage activity = (MainPage) this.activity;
+            Toast.makeText(activity,"Add Success",Toast.LENGTH_LONG).show();
+            activity.backToAnimalMenu(view);
+        }
+        else if (activity instanceof MainPage && backFromServer.get(0).equals("NOT OK")){
+            Toast.makeText(activity,"Animal Already Exist",Toast.LENGTH_LONG).show();
         }
 
         super.onPostExecute(s);
     }
+
+
 
     //-----------------//
     //Alert  For Login //

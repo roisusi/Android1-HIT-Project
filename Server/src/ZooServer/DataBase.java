@@ -146,7 +146,7 @@ public class DataBase {
 
     public String addAnimal(AddAnimal addAnimal) throws SQLException {
 
-        String selectSql = "select * from Animals where Type =" + "\"" + addAnimal.getType() + "\"" + " and " + addAnimal.getName();
+        String selectSql = "select * from Animals where Type =" + "\"" + addAnimal.getType() + "\"" + " and Name=\"" + addAnimal.getName() + "\"" ;
         Statement selectStatment = con.createStatement();
         selectStatment.getResultSet();
         ResultSet results = null;

@@ -1,12 +1,16 @@
 package com.example.rrszoo.Java;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.rrszoo.Fragments.FragmentAddAnimal;
 import com.example.rrszoo.Fragments.FragmentAnimals;
@@ -41,7 +46,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     private FragmentManager fragmentManager;
     private Spinner spinnerAnimals;
     private Spinner spinnerTypes;
-    private Fragment fragment;
+    private Fragment fragmentAnimalPage;
     private FragmentAddAnimal fragmentAddAnimalal;
     private ImageView imageView;
     private String gettingExtra;
@@ -50,6 +55,8 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     private GetInformation getInformation;
     private SendInformation sendInformation;
     private FloatingActionButton fab;
+    private Menu menu;
+    private MenuInflater inflater;
 
 
     @Override
@@ -87,10 +94,12 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 
     public void animalSelection(View view) {
         fragmentManager = getSupportFragmentManager();
-        fragment = new FragmentAnimals();
+        fragmentAnimalPage = new FragmentAnimals();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.animalFrag, fragment).addToBackStack(null).commit();
+        fragmentTransaction.add(R.id.animalFrag, fragmentAnimalPage).addToBackStack(null).commit();
         fragmentManager.executePendingTransactions();
+
+
 
 
         switch (view.getId()) {
@@ -114,6 +123,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 
 
     }
+
 
     public void backToAnimalMenu(View view) {
         fragmentManager.popBackStack();
@@ -187,6 +197,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void addAnimal(View view) {
 
         EditText name = (EditText) findViewById(R.id.addAnimalName);
@@ -198,18 +209,21 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 
         messageToServer.clear();
 
-        spinnerTypes = fragmentAddAnimalal.getSpinner();
-        messageToServer.add("AddAnimal");
-        messageToServer.add(spinnerTypes.getSelectedItem().toString());
-        messageToServer.add(name.getText().toString());
-        messageToServer.add(location.getText().toString());
-        messageToServer.add(lifeTime.getText().toString());
-        messageToServer.add(food.getText().toString());
-        messageToServer.add(childrens.getText().toString());
-        messageToServer.add(img.getText().toString());
-
-        sendInformation = new SendInformation(messageToServer, MainPage.this);
-        sendInformation.execute();
+        if (name.getText().toString().isEmpty() || location.getText().toString().isEmpty() || lifeTime.getText().toString().isEmpty() || food.getText().toString().isEmpty() || childrens.getText().toString().isEmpty() || img.getText().toString().isEmpty()) {
+            openLoginAlert();
+        } else {
+            spinnerTypes = fragmentAddAnimalal.getSpinner();
+            messageToServer.add("AddAnimal");
+            messageToServer.add(spinnerTypes.getSelectedItem().toString());
+            messageToServer.add(name.getText().toString());
+            messageToServer.add(location.getText().toString());
+            messageToServer.add(lifeTime.getText().toString());
+            messageToServer.add(food.getText().toString());
+            messageToServer.add(childrens.getText().toString());
+            messageToServer.add(img.getText().toString());
+            sendInformation = new SendInformation(messageToServer, MainPage.this);
+            sendInformation.execute();
+        }
 
     }
 
@@ -243,7 +257,8 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+        inflater = getMenuInflater();
+        this.menu = menu;
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
@@ -254,7 +269,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         Intent intent;
         switch (id) {
             case R.id.account:
-                intent= new Intent(getApplicationContext(), AccountInfo.class);
+                intent = new Intent(getApplicationContext(), AccountInfo.class);
                 startActivity(intent);
                 break;
             case R.id.logout:
@@ -267,6 +282,28 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 
         }
         return true;
+    }
+
+    public void openLoginAlert(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainPage.this);
+        alertDialogBuilder.setMessage("One or More cells are empty");
+        alertDialogBuilder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Toast.makeText(MainPage.this,"Fill all Text",Toast.LENGTH_LONG).show();
+                    }
+                });
+/*
+        alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+*/
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
 }

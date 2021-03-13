@@ -54,14 +54,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentReg, new FragmentRegister()).addToBackStack(null).commit();
 
-//        Button backLog = (Button) findViewById(R.id.backFragReg);
-//        backLog.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                backToMain();
-//            }
-//        });
-
         login.setVisibility(View.INVISIBLE);
         register.setVisibility(View.INVISIBLE);
         title.setVisibility(View.INVISIBLE);
@@ -72,14 +64,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragmentLog, new FragmentLogin()).addToBackStack(null).commit();
-
-//        Button backReg = (Button) findViewById(R.id.backFragLogin);
-//        backReg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                backToMain();
-//            }
-//        });
 
         login.setVisibility(View.INVISIBLE);
         register.setVisibility(View.INVISIBLE);
