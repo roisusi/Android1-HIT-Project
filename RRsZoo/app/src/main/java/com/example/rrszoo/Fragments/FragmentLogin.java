@@ -101,7 +101,7 @@ public class FragmentLogin extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View v = inflater.inflate(R.layout.fragment_login, container, false);
+        View v = inflater.inflate(isEnglish ? R.layout.fragment_login : R.layout.fragment_login_heb, container, false);
         loginText = (EditText) v.findViewById(R.id.loginText);
         passText = (EditText) v.findViewById(R.id.passText);
         checkBoxLogin = (CheckBox) v.findViewById(R.id.rememberCB);

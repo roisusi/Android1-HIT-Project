@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         zooLanguage = new ZooLanguage(getSharedPreferences("RRsZoo", MODE_PRIVATE));
-        setContentView(R.layout.activity_main);
+        setContentView(zooLanguage.isEnglish() ? R.layout.activity_main : R.layout.activity_main_heb);
 
         login = (Button) findViewById(R.id.loginFirstPage);
         register = (Button) findViewById(R.id.registerFirstPage);

@@ -133,16 +133,16 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
                     getDataBaseTypes("חיות מים");
                     break;
                 case R.id.arthropoda:
-                    getDataBaseTypes("Arthropoda");
+                    getDataBaseTypes("חסרי חוליות");
                     break;
                 case R.id.mammals:
-                    getDataBaseTypes("Mammals");
+                    getDataBaseTypes("יונקים");
                     break;
                 case R.id.reptiles:
-                    getDataBaseTypes("Reptiles");
+                    getDataBaseTypes("זוחלים");
                     break;
                 case R.id.birds:
-                    getDataBaseTypes("Birds");
+                    getDataBaseTypes("עופות");
                     break;
             }
         }
@@ -214,9 +214,15 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 
     public void fabFunc() {
         fragmentManager = getSupportFragmentManager();
-        fragmentAddAnimalal = new FragmentAddAnimal();
+        fragmentAddAnimalal = new FragmentAddAnimal(zooLanguage.isEnglish());
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.addAnimalFrag, fragmentAddAnimalal).addToBackStack(null).commit();
+        if (zooLanguage.isEnglish()) {
+            fragmentTransaction.add(R.id.addAnimalFrag, fragmentAddAnimalal).addToBackStack(null).commit();
+        }
+        else {
+            fragmentTransaction.replace(R.id.addAnimalFragHeb, fragmentAddAnimalal).addToBackStack(null).commit();
+
+        }
 
         fab.setVisibility(View.INVISIBLE);
         imageView.setVisibility(View.INVISIBLE);

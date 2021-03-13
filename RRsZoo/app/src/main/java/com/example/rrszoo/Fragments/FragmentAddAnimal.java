@@ -28,6 +28,7 @@ public class FragmentAddAnimal extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    boolean isEnglish = true;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -35,6 +36,11 @@ public class FragmentAddAnimal extends Fragment {
     private Spinner spinnerTypes;
 
     public FragmentAddAnimal() {
+        // Required empty public constructor
+    }
+
+    public FragmentAddAnimal(Boolean isEnglish) {
+        this.isEnglish = isEnglish;
         // Required empty public constructor
     }
 
@@ -73,7 +79,7 @@ public class FragmentAddAnimal extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View v = inflater.inflate(R.layout.fragment_add_animal, container, false);
+        View v = inflater.inflate(isEnglish ? R.layout.fragment_add_animal : R.layout.fragment_add_animal_heb, container, false);
 
         spinnerTypes = v.findViewById(R.id.spinnerType);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),R.array.Type , android.R.layout.simple_spinner_item);
@@ -88,5 +94,6 @@ public class FragmentAddAnimal extends Fragment {
     public Spinner getSpinner(){
         return spinnerTypes;
     }
+
 
 }

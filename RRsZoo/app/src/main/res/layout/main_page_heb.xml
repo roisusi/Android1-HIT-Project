@@ -42,7 +42,7 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/buttons_main_page"
         android:onClick="animalSelection"
-        android:text="פרוקי-רגליים"
+        android:text="חסריי חוליות"
         app:layout_constraintStart_toStartOf="@+id/birds"
         app:layout_constraintTop_toBottomOf="@+id/birds" />
 
@@ -98,6 +98,17 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <FrameLayout
+        android:id="@+id/addAnimalFragHeb"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
+
+    <FrameLayout
         android:id="@+id/animalFrag"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -109,12 +120,17 @@
         app:layout_constraintTop_toBottomOf="@+id/titleBar3"
         app:layout_constraintVertical_bias="0.0">
 
-        <FrameLayout
-            android:id="@+id/addAnimalFrag"
-            android:layout_width="0dp"
-            android:layout_height="0dp">
+    </FrameLayout>
 
-        </FrameLayout>
+    <FrameLayout
+        android:id="@+id/addAnimalFrag"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/animalFrag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
