@@ -14,7 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.rrszoo.Java.GetInformation;
+import com.example.rrszoo.Java.MainActivity;
 import com.example.rrszoo.Java.MainPage;
+import com.example.rrszoo.Java.SendInformation;
 import com.example.rrszoo.R;
 
 import java.util.ArrayList;
@@ -41,10 +44,13 @@ public class FragmentLogin extends Fragment {
 
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
-    private static boolean logFlag=true;
+    private static boolean logFlag = true;
     private EditText loginText;
     private EditText passText;
     private List<String> stringFromServer;
+    private List<String> messageToServer;
+    private GetInformation getInformation;
+    private boolean logout = false;
 
 
     public FragmentLogin() {
@@ -97,11 +103,10 @@ public class FragmentLogin extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
-    public void loginFromServer(List<String> s){
-        stringFromServer=s;
-        setLoginDetails(stringFromServer.get(0),stringFromServer.get(1));
+    public void loginFromServer(List<String> s) {
+        stringFromServer = s;
+        setLoginDetails(stringFromServer.get(0), stringFromServer.get(1));
     }
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
@@ -118,12 +123,15 @@ public class FragmentLogin extends Fragment {
             editor.apply();
         }
     }
-    private void tryLogIn()  {
+
+    private void tryLogIn() {
         final String login = this.pref.getString("login", null);
         final String password = this.pref.getString("password", null);
         if (login != null && password != null) {
             loginText.setText(login);
             passText.setText(password);
+            logout = true;
+            loginToServer();
         }
     }
 
@@ -139,8 +147,25 @@ public class FragmentLogin extends Fragment {
         setLoginDetails(null, null);
     }
 
-    public boolean rememberLogin(){
-        return true;
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
+    public boolean rememberLogin(String s) {
+        if (s != null && s.equals("Logout")) {
+            cleanLoginDetails();
+            logout = false;
+        } else {
+            logout = true;
+        }
+        return logout;
+    }
+
+    public void loginToServer() {
+        messageToServer = new ArrayList<>();
+        messageToServer.clear();
+        messageToServer.add("Login");
+        messageToServer.add(loginText.getText().toString());
+        messageToServer.add(passText.getText().toString());
+        getInformation = new GetInformation(messageToServer, getActivity());
+        getInformation.execute();
     }
 
 

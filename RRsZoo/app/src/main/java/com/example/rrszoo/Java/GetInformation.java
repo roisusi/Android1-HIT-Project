@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-class GetInformation extends AsyncTask<String,Void,String>
+public class GetInformation extends AsyncTask<String,Void,String>
 {
 
     private static final String TAG = "GetInformation";
