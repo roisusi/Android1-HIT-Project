@@ -92,6 +92,11 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
+    }
+
     public void animalSelection(View view) {
         fragmentManager = getSupportFragmentManager();
         fragmentAnimalPage = new FragmentAnimals();
