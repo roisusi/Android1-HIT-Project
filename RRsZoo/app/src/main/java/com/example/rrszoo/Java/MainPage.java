@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -57,13 +59,17 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
     private FloatingActionButton fab;
     private Menu menu;
     private MenuInflater inflater;
+    private SharedPreferences sharedPreference;
+    private SharedPreferences.Editor editor;
     ZooLanguage zooLanguage;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        zooLanguage = new ZooLanguage(getSharedPreferences("RRsZoo", MODE_PRIVATE));
+        sharedPreference = getSharedPreferences("RRsZoo", MODE_PRIVATE);
+        editor = sharedPreference.edit();
+        zooLanguage = new ZooLanguage(sharedPreference);
         setContentView(zooLanguage.isEnglish() ? R.layout.main_page : R.layout.main_page_heb);
         fab = findViewById(R.id.fab);
 
@@ -306,6 +312,7 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
         return true;
     }
 
+    @SuppressLint("NewApi")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -320,6 +327,8 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
                 intent = new Intent(getApplicationContext(), MainActivity.class);
                 logout = "Logout";
                 intent.putExtra("Logout", logout);
+                logOut();
+                editor.apply();
                 startActivity(intent);
                 break;
             case R.id.Hebrew:
@@ -338,6 +347,15 @@ public class MainPage extends AppCompatActivity implements AdapterView.OnItemSel
 
         }
         return true;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
+    public void logOut() {
+        editor.putBoolean("isLogOut", true);
+        editor.putString("login", null);
+        editor.putString("password", null);
+        editor.putString("checked", null);
+        editor.apply();
     }
 
     public void openLoginAlert() {
