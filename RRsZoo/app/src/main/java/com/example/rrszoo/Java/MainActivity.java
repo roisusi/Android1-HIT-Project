@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         register = (Button) findViewById(R.id.registerFirstPage);
         title = (ImageView) findViewById(R.id.titleBar);
         messageToServer = new ArrayList<>();
-        fragmentLogin = new  FragmentLogin(zooLanguage.isEnglish());
 
         //Hide the Menu Bar
         getSupportActionBar().hide();
@@ -58,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
         logout = getIntent().getStringExtra("Logout");
 
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
+    @Override
+    protected void onPostResume() {
+        Log.e(TAG, "onPostResume: HIIIIIIIIIII" );
+        super.onPostResume();
     }
 
     public void registerUser(View view) {
@@ -71,9 +77,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void loginFrag(View view) {
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentLogin = new FragmentLogin(zooLanguage.isEnglish(),logout);
         fragmentTransaction.add(R.id.fragmentLog, fragmentLogin).addToBackStack(null).commit();
 
         login.setVisibility(View.INVISIBLE);
@@ -97,9 +105,8 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.GINGERBREAD)
     public void loginToServer(View view) {
-        logout=null;
-        fragmentLogin.rememberLogin(logout);
-        fragmentLogin.loginToServer();
+            fragmentLogin.tryLogIn();
+            fragmentLogin.loginToServer();
     }
 
     public void register(View view) {
@@ -110,8 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (zooLanguage.isEnglish()) {
             messageToServer.add("En");
-        }
-        else {
+        } else {
             messageToServer.add("He");
         }
         messageToServer.add("Register");
@@ -119,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         messageToServer.add(pass.getText().toString());
         messageToServer.add("false");
         messageToServer.add(email.getText().toString());
-        sendInformation = new SendInformation(messageToServer, MainActivity.this,view);
+        sendInformation = new SendInformation(messageToServer, MainActivity.this, view);
         sendInformation.execute();
 
     }
@@ -129,11 +135,10 @@ public class MainActivity extends AppCompatActivity {
         stringFromServer = s;
         Log.e(TAG, "test: " + stringFromServer);
 
-        if (fragmentLogin.rememberLogin(logout)){
-            intent = new Intent(getApplicationContext(), MainPage.class);
-            intent.putExtra("Admin", stringFromServer.get(2));
-            startActivity(intent);
-        }
+        intent = new Intent(getApplicationContext(), MainPage.class);
+        intent.putExtra("Admin", stringFromServer.get(2));
+        startActivity(intent);
+
 
     }
 
