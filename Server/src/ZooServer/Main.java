@@ -28,9 +28,9 @@ public class Main {
     public static void main(String[] args) throws IOException {
         db = new DataBase();
         mgs = new ArrayList<>();
-        try {
             while (true) {
-                Gson gson = new Gson();
+                try {
+                    Gson gson = new Gson();
                 ServerSocket ss = new ServerSocket(20000);
                 Socket socket = ss.accept();
 
@@ -150,11 +150,11 @@ public class Main {
                 ss.close();
                 socket.close();
 
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
 
