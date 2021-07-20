@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
@@ -25,7 +26,7 @@ public class Main {
     private static ArrayList<String> tempArray;
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         db = new DataBase();
         mgs = new ArrayList<>();
         try {
@@ -39,123 +40,123 @@ public class Main {
 
                 message = br.readLine();
                 mgs = gson.fromJson(message, ArrayList.class);
+                if (mgs.isEmpty() == false && mgs !=null) {
+                    switch (mgs.get(1)) {
+                        case "Login":
+                            try {
+                                db.connect();
+                                login = db.loginPage(mgs.get(2), mgs.get(3));
+                                output = new PrintWriter(socket.getOutputStream(), true);
+                                System.out.println("User is : " + login.getLogin() + " and Password is : " + login.getPas()
+                                        + " and email is : " + login.getEmail());
+                                if(login.getLogin() == "" || login.getPas() == "")
+                                    login.setLogin("NOT OK LOGGING");
+                                String serializedLogIn = gson.toJson(login.send());
+                                output.println(serializedLogIn);
+                                output.flush();
 
-                switch (mgs.get(1)) {
-                    case "Login":
-                        try {
-                            db.connect();
-                            login = db.loginPage(mgs.get(2),mgs.get(3));
-                            output = new PrintWriter(socket.getOutputStream(), true);
-                            System.out.println("User is : " + login.getLogin() + " and Password is : " + login.getPas()
-                            + " and email is : " + login.getEmail());
-                            String serializedLogIn = gson.toJson(login.send());
-                            output.println(serializedLogIn);
-                            output.flush();
-
-                        } catch (SQLException throwable) {
-                            throwable.printStackTrace();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                            } catch (SQLException throwable) {
+                                throwable.printStackTrace();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                             break;
                         case "Animal":
-                        try {
-                            db.connect();
-                            if(mgs.get(0).equals("He")){
-                                animal = db.animalPageHeb(mgs.get(2));
-                            }
-                            else {
-                                animal = db.animalPage(mgs.get(2));
-                            }
+                            try {
+                                db.connect();
+                                if (mgs.get(0).equals("He")) {
+                                    animal = db.animalPageHeb(mgs.get(2));
+                                } else {
+                                    animal = db.animalPage(mgs.get(2));
+                                }
 
-                            output = new PrintWriter(socket.getOutputStream(), true);
-                            System.out.println("Animal is : " + animal.send() );
-                            String serializedLogIn = gson.toJson(animal.send());
-                            output.println(serializedLogIn);
-                            output.flush();
-                        } catch (SQLException throwable) {
-                            throwable.printStackTrace();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                            break;
-                    case "Type":
-                        try {
-                            db.connect();
-                            if(mgs.get(0).equals("He")){
-                                listOfTime = db.getTypesToSpinnerHeb(mgs.get(2));
+                                output = new PrintWriter(socket.getOutputStream(), true);
+                                System.out.println("Animal is : " + animal.send());
+                                String serializedLogIn = gson.toJson(animal.send());
+                                output.println(serializedLogIn);
+                                output.flush();
+                            } catch (SQLException throwable) {
+                                throwable.printStackTrace();
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                            else {
-                                listOfTime = db.getTypesToSpinner(mgs.get(2));
-                            }
-                            output = new PrintWriter(socket.getOutputStream(), true);
-                            System.out.println("Animal is : " + listOfTime );
-                            String serializedLogIn = gson.toJson(listOfTime);
-                            output.println(serializedLogIn);
-                            output.flush();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
                             break;
-                    case "Register":
-                        try {
-                            db.connect();
-                            tempArray = new ArrayList<>();
-                            register = new Register(mgs.get(2),mgs.get(3),mgs.get(4),mgs.get(5));
-                            tempArray.add(db.register(register));
-                            output = new PrintWriter(socket.getOutputStream(), true);
-                            System.out.println("Detail of register is : " + mgs );
-                            System.out.println("is OK ? : " + tempArray );
-                            String serializedLogIn = gson.toJson(tempArray);
-                            output.println(serializedLogIn);
-                            output.flush();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case "AddAnimal":
-                        try {
-                            db.connect();
-                            tempArray = new ArrayList<>();
-                            addAnimal = new AddAnimal(mgs.get(2),mgs.get(3),mgs.get(4),mgs.get(5),mgs.get(6),mgs.get(7),mgs.get(8));
-                            tempArray.add(db.addAnimal(addAnimal));
-                            output = new PrintWriter(socket.getOutputStream(), true);
-                            System.out.println("Detail of Animal is : " + mgs );
-                            System.out.println("is OK ? : " + tempArray );
-                            String serializedLogIn = gson.toJson(tempArray);
-                            output.println(serializedLogIn);
-                            output.flush();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    case "Account":
-                        try {
-                            System.out.println("Account User is : " + login.getLogin() + " and Password is : " + login.getPas()
-                                    + " and email is : " + login.getEmail());
-                            output = new PrintWriter(socket.getOutputStream(), true);
-                            String serializedLogIn = gson.toJson(login.send());
-                            output.println(serializedLogIn);
-                            output.flush();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
+                        case "Type":
+                            try {
+                                db.connect();
+                                if (mgs.get(0).equals("He")) {
+                                    listOfTime = db.getTypesToSpinnerHeb(mgs.get(2));
+                                } else {
+                                    listOfTime = db.getTypesToSpinner(mgs.get(2));
+                                }
+                                output = new PrintWriter(socket.getOutputStream(), true);
+                                System.out.println("Animal is : " + listOfTime);
+                                String serializedLogIn = gson.toJson(listOfTime);
+                                output.println(serializedLogIn);
+                                output.flush();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case "Register":
+                            try {
+                                db.connect();
+                                tempArray = new ArrayList<>();
+                                register = new Register(mgs.get(2), mgs.get(3), mgs.get(4), mgs.get(5));
+                                tempArray.add(db.register(register));
+                                output = new PrintWriter(socket.getOutputStream(), true);
+                                System.out.println("Detail of register is : " + mgs);
+                                System.out.println("is OK ? : " + tempArray);
+                                String serializedLogIn = gson.toJson(tempArray);
+                                output.println(serializedLogIn);
+                                output.flush();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case "AddAnimal":
+                            try {
+                                db.connect();
+                                tempArray = new ArrayList<>();
+                                addAnimal = new AddAnimal(mgs.get(2), mgs.get(3), mgs.get(4), mgs.get(5), mgs.get(6), mgs.get(7), mgs.get(8));
+                                tempArray.add(db.addAnimal(addAnimal));
+                                output = new PrintWriter(socket.getOutputStream(), true);
+                                System.out.println("Detail of Animal is : " + mgs);
+                                System.out.println("is OK ? : " + tempArray);
+                                String serializedLogIn = gson.toJson(tempArray);
+                                output.println(serializedLogIn);
+                                output.flush();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                        case "Account":
+                            try {
+                                System.out.println("Account User is : " + login.getLogin() + " and Password is : " + login.getPas()
+                                        + " and email is : " + login.getEmail());
+                                output = new PrintWriter(socket.getOutputStream(), true);
+                                String serializedLogIn = gson.toJson(login.send());
+                                output.println(serializedLogIn);
+                                output.flush();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            break;
+                    }
+
+
+                    isr.close();
+                    br.close();
+                    output.close();
+                    ss.close();
+                    socket.close();
+
                 }
 
-
-                isr.close();
-                br.close();
-                output.close();
-                ss.close();
-                socket.close();
-
             }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            } catch(IOException e){
+            System.out.println("Found Bind");
+            }
 
 
     }
